@@ -1,0 +1,95 @@
+@use "./components/doc-sidebar";
+
+:root {
+  --ifm-layout-background-c: #fff;
+  --ifm-color-primary: #552fa0;
+  --ifm-color-primary-dark: #512d97;
+  --ifm-color-primary-darker: #4a288d;
+  --ifm-color-primary-darkest: #422381;
+  --ifm-color-primary-light: #5d33af;
+  --ifm-color-primary-lighter: #643ab6;
+  --ifm-color-primary-lightest: #6b46b4;
+  --ifm-code-font-size: 95%;
+  --ifm-color-sidebar-category: #141414;
+  --ifm-card-background-color: #fff;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --ifm-layout-background-c: #071122;
+  --ifm-navbar-background-color: #0b182f;
+  --ifm-footer-background-color: #0b182f;
+  --ifm-color-primary: #c1aaee;
+  --ifm-color-primary-dark: #a888e7;
+  --ifm-color-primary-darker: #9c77e4;
+  --ifm-color-primary-darkest: #7744da;
+  --ifm-color-primary-light: #daccf5;
+  --ifm-color-primary-lighter: #dacdf5;
+  --ifm-color-primary-lightest: #dacdf5;
+  --ifm-color-sidebar-category: white;
+  --ifm-card-background-color: #0a182e;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+html {
+  background-color: var(--ifm-layout-background-c);
+}
+
+[class*="announcementBar_"] {
+  --docusaurus-announcement-bar-height: 3rem;
+
+  background: linear-gradient(90deg, #300e6e, #4b2890 15%, #7644c6 35%, #7644c6 45%, #4b2890 85%, #300e6e);
+  &:hover,
+  &:focus,
+  &:active {
+    strong {
+      color: var(--c-red-50);
+    }
+  }
+}
+
+[class*="announcementBarContent_"] {
+  padding: 0;
+
+  > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--docusaurus-announcement-bar-height);
+    letter-spacing: 0.01em !important;
+    text-decoration: none !important;
+    color: #fff !important;
+    font-size: 1rem;
+    font-weight: 300;
+
+    strong {
+      font-weight: 800;
+      color: var(--c-red-70);
+      transition: color 0.2s ease-out;
+    }
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+.cardContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocCard-styles-module {
+  box-shadow: none !important;
+}
+
+.footer {
+  padding: 10px;
+
+  .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 12px;
+    color: grey;
+  }
+}
+

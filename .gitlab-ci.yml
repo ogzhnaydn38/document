@@ -1,0 +1,15 @@
+
+  stages:
+    - deploy
+  
+  build-and-deploy-server:
+    stage: deploy
+    image: docker:stable
+    services:
+      - docker:dind
+    script:
+      - sudo bash -c "docker build -f Dockerfile -t tickatme-docusaurus:latest ."
+      - sudo bash -c 'cd undefined/tickatme/  && docker compose up -d tickatme-docusaurus'
+    only:
+      - main
+  
