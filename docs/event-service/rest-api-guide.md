@@ -251,8 +251,6 @@ Event service provides the following resources which are stored in its own datab
 
 ### Event resource
 
-_Default access route_ : `/api/event/events`
-
 _Resource Definition_ : Event data object stores the organizer&#39;s events.
 _Event Resource Properties_
 | Name | Type | Required | Default | Definition |
@@ -276,8 +274,6 @@ _Event Resource Properties_
 
 ### Category resource
 
-_Default access route_ : `/api/event/categories`
-
 _Resource Definition_ : Category data object stores information for the event categories. It will be represented in other data object as categoryId. The categories will be added by only saasAdmin.
 _Category Resource Properties_
 | Name | Type | Required | Default | Definition |
@@ -289,8 +285,6 @@ _Category Resource Properties_
 
 ### Country resource
 
-_Default access route_ : `/api/event/countries`
-
 _Resource Definition_ : A table to store countries. It will be accessed by only saas admin.
 _Country Resource Properties_
 | Name | Type | Required | Default | Definition |
@@ -300,8 +294,6 @@ _Country Resource Properties_
 
 ### City resource
 
-_Default access route_ : `/api/event/cities`
-
 _Resource Definition_ : A data object to store the cities to address to the events. Cities belong to a country. Cities can only be managed by saas admin.
 _City Resource Properties_
 | Name | Type | Required | Default | Definition |
@@ -310,15 +302,18 @@ _City Resource Properties_
 | **countryId** | ID | | | _The id of the country that the city belongs. It should be the id value of the country in country data store._ |
 | **published** | Boolean | | | _A boolean value to inactivate the city in the app. All cities are published by default._ |
 
-## Route: retrive-event
+## Route:
+
+_Route Type_ : get
+_Default access route_ : _GET_ `/events/:eventId`
 
 ### Parameters
 
 The retrive-event api has got 1 parameter
 
-| Parameter | Type | Required | Population             |
-| --------- | ---- | -------- | ---------------------- |
-| eventId   | ID   | true     | request.params.eventId |
+| Parameter | Type | Required | Population              |
+| --------- | ---- | -------- | ----------------------- |
+| eventId   | ID   | true     | request.params?.eventId |
 
 To access the api you can use the **REST** controller with the path **GET /events/:eventId**
 
@@ -354,30 +349,31 @@ Following JSON represents the most comprehensive form of the **`event`** object 
 }
 ```
 
-## Route: create-event
+## Route:
+
+_Route Type_ : create
+_Default access route_ : _POST_ `/events`
 
 ### Parameters
 
-The create-event api has got 16 parameters
+The create-event api has got 14 parameters
 
-| Parameter     | Type    | Required | Population                 |
-| ------------- | ------- | -------- | -------------------------- |
-| eventName     | Text    |          | request.body.eventName     |
-| eventInfo     | Text    |          | request.body.eventInfo     |
-| ownerId       | ID      |          | request.session.userId     |
-| eventImage    | String  |          | request.body.eventImage    |
-| startDate     | Date    |          | request.body.startDate     |
-| minutes       | Integer |          | request.body.minutes       |
-| categoryId    | ID      |          | request.body.categoryId    |
-| venueName     | String  |          | request.body.venueName     |
-| venueAddress  | Text    |          | request.body.venueAddress  |
-| venueLocation | String  |          | request.body.venueLocation |
-| cityId        | ID      |          | request.body.cityId        |
-| countryId     | ID      |          | request.body.countryId     |
-| capacity      | Integer |          | request.body.capacity      |
-| price         | Float   |          | request.body.price         |
-| published     | String  |          | request.body.published     |
-| organizerId   | ID      |          | request.body.organizerId   |
+| Parameter     | Type    | Required | Population                  |
+| ------------- | ------- | -------- | --------------------------- |
+| eventName     | Text    |          | request.body?.eventName     |
+| eventInfo     | Text    |          | request.body?.eventInfo     |
+| eventImage    | String  |          | request.body?.eventImage    |
+| startDate     | Date    |          | request.body?.startDate     |
+| minutes       | Integer |          | request.body?.minutes       |
+| categoryId    | ID      |          | request.body?.categoryId    |
+| venueName     | String  |          | request.body?.venueName     |
+| venueAddress  | Text    |          | request.body?.venueAddress  |
+| venueLocation | String  |          | request.body?.venueLocation |
+| cityId        | ID      |          | request.body?.cityId        |
+| countryId     | ID      |          | request.body?.countryId     |
+| capacity      | Integer |          | request.body?.capacity      |
+| price         | Float   |          | request.body?.price         |
+| published     | String  |          | request.body?.published     |
 
 To access the api you can use the **REST** controller with the path **POST /events**
 
@@ -400,7 +396,6 @@ axios({
     capacity: "Integer",
     price: "Float",
     published: "String",
-    organizerId: "ID",
   },
   params: {},
 });
@@ -429,15 +424,235 @@ Following JSON represents the most comprehensive form of the **`event`** object 
 }
 ```
 
-## Route: retrive-category
+## Route:
+
+_Route Type_ : getList
+_Default access route_ : _GET_ `/organizerevents`
+
+The get-organizerevents api has got no parameters.
+
+To access the api you can use the **REST** controller with the path **GET /organizerevents**
+
+```js
+axios({
+  method: "GET",
+  url: "/organizerevents",
+  data: {},
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`events`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "events",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "events": { "id": "ID", "isActive": true }
+}
+```
+
+## Route:
+
+_Route Type_ : update
+_Default access route_ : \*\* `/events/:eventId`
+
+### Parameters
+
+The update-event api has got 15 parameters
+
+| Parameter     | Type    | Required | Population                  |
+| ------------- | ------- | -------- | --------------------------- |
+| eventName     | Text    | false    | request.body?.eventName     |
+| eventInfo     | Text    | false    | request.body?.eventInfo     |
+| eventImage    | String  | false    | request.body?.eventImage    |
+| startDate     | Date    | false    | request.body?.startDate     |
+| minutes       | Integer | false    | request.body?.minutes       |
+| categoryId    | ID      | false    | request.body?.categoryId    |
+| venueName     | String  | false    | request.body?.venueName     |
+| venueAddress  | Text    | false    | request.body?.venueAddress  |
+| venueLocation | String  | false    | request.body?.venueLocation |
+| cityId        | ID      | false    | request.body?.cityId        |
+| countryId     | ID      | false    | request.body?.countryId     |
+| capacity      | Integer | false    | request.body?.capacity      |
+| price         | Float   | false    | request.body?.price         |
+| published     | String  | false    | request.body?.published     |
+| eventId       | ID      | true     | request.params?.eventId     |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: 
+This validation will be executed on layer3
+*/
+if (!this.event.published == false || this.startDate == null) {
+  throw new BadRequestError("errMsg_publishedEventDatesCanNotBeChanged");
+}
+```
+
+To access the api you can use the **REST** controller with the path ** /events/:eventId**
+
+```js
+axios({
+  method: "",
+  url: `/events/${eventId}`,
+  data: {
+    eventName: "Text",
+    eventInfo: "Text",
+    eventImage: "String",
+    startDate: "Date",
+    minutes: "Integer",
+    categoryId: "ID",
+    venueName: "String",
+    venueAddress: "Text",
+    venueLocation: "String",
+    cityId: "ID",
+    countryId: "ID",
+    capacity: "Integer",
+    price: "Float",
+    published: "String",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`event`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "event",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "event": { "id": "ID", "isActive": true }
+}
+```
+
+## Route:
+
+_Route Type_ : update
+_Default access route_ : \*\* `/events/:eventId`
+
+### Parameters
+
+The publish-event api has got 1 parameter
+
+| Parameter | Type | Required | Population              |
+| --------- | ---- | -------- | ----------------------- |
+| eventId   | ID   | true     | request.params?.eventId |
+
+To access the api you can use the **REST** controller with the path ** /events/:eventId**
+
+```js
+axios({
+  method: "",
+  url: `/events/${eventId}`,
+  data: {},
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`event`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "event",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "event": { "id": "ID", "isActive": true }
+}
+```
+
+## Route:
+
+_Route Type_ : getList
+_Default access route_ : _GET_ `/userevents`
+
+The retreive-userevents api has got no parameters.
+
+To access the api you can use the **REST** controller with the path **GET /userevents**
+
+```js
+axios({
+  method: "GET",
+  url: "/userevents",
+  data: {},
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`events`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "events",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "events": { "id": "ID", "isActive": true }
+}
+```
+
+## Route:
+
+_Route Type_ : get
+_Default access route_ : _GET_ `/categories/:categoryId`
 
 ### Parameters
 
 The retrive-category api has got 1 parameter
 
-| Parameter  | Type | Required | Population                |
-| ---------- | ---- | -------- | ------------------------- |
-| categoryId | ID   | true     | request.params.categoryId |
+| Parameter  | Type | Required | Population                 |
+| ---------- | ---- | -------- | -------------------------- |
+| categoryId | ID   | true     | request.params?.categoryId |
 
 To access the api you can use the **REST** controller with the path **GET /categories/:categoryId**
 
@@ -473,18 +688,21 @@ Following JSON represents the most comprehensive form of the **`category`** obje
 }
 ```
 
-## Route: create-category
+## Route:
+
+_Route Type_ : create
+_Default access route_ : _POST_ `/categories`
 
 ### Parameters
 
 The create-category api has got 4 parameters
 
-| Parameter | Type    | Required | Population             |
-| --------- | ------- | -------- | ---------------------- |
-| name      | String  |          | request.body.name      |
-| sortOrder | Integer |          | request.body.sortOrder |
-| featured  | Boolean |          | request.body.featured  |
-| published | Boolean |          | request.body.published |
+| Parameter | Type    | Required | Population              |
+| --------- | ------- | -------- | ----------------------- |
+| name      | String  |          | request.body?.name      |
+| sortOrder | Integer |          | request.body?.sortOrder |
+| featured  | Boolean |          | request.body?.featured  |
+| published | Boolean |          | request.body?.published |
 
 To access the api you can use the **REST** controller with the path **POST /categories**
 
@@ -525,7 +743,10 @@ Following JSON represents the most comprehensive form of the **`category`** obje
 }
 ```
 
-## Route: list-categories
+## Route:
+
+_Route Type_ : getList
+_Default access route_ : _GET_ `/categories`
 
 The list-categories api has got no parameters.
 
@@ -563,15 +784,18 @@ Following JSON represents the most comprehensive form of the **`categories`** ob
 }
 ```
 
-## Route: find-country
+## Route:
+
+_Route Type_ : get
+_Default access route_ : _GET_ `/countries/:countryId`
 
 ### Parameters
 
 The find-country api has got 1 parameter
 
-| Parameter | Type | Required | Population               |
-| --------- | ---- | -------- | ------------------------ |
-| countryId | ID   | true     | request.params.countryId |
+| Parameter | Type | Required | Population                |
+| --------- | ---- | -------- | ------------------------- |
+| countryId | ID   | true     | request.params?.countryId |
 
 To access the api you can use the **REST** controller with the path **GET /countries/:countryId**
 
@@ -607,7 +831,10 @@ Following JSON represents the most comprehensive form of the **`country`** objec
 }
 ```
 
-## Route: list-countries
+## Route:
+
+_Route Type_ : getList
+_Default access route_ : _GET_ `/countries`
 
 The list-countries api has got no parameters.
 
@@ -645,16 +872,19 @@ Following JSON represents the most comprehensive form of the **`countries`** obj
 }
 ```
 
-## Route: create-country
+## Route:
+
+_Route Type_ : create
+_Default access route_ : _POST_ `/countries`
 
 ### Parameters
 
 The create-country api has got 2 parameters
 
-| Parameter   | Type    | Required | Population               |
-| ----------- | ------- | -------- | ------------------------ |
-| countryName | String  |          | request.body.countryName |
-| published   | Boolean |          | request.body.published   |
+| Parameter   | Type    | Required | Population                |
+| ----------- | ------- | -------- | ------------------------- |
+| countryName | String  |          | request.body?.countryName |
+| published   | Boolean |          | request.body?.published   |
 
 To access the api you can use the **REST** controller with the path **POST /countries**
 
@@ -693,15 +923,18 @@ Following JSON represents the most comprehensive form of the **`country`** objec
 }
 ```
 
-## Route: retrive-city
+## Route:
+
+_Route Type_ : get
+_Default access route_ : _GET_ `/cities/:cityId`
 
 ### Parameters
 
 The retrive-city api has got 1 parameter
 
-| Parameter | Type | Required | Population            |
-| --------- | ---- | -------- | --------------------- |
-| cityId    | ID   | true     | request.params.cityId |
+| Parameter | Type | Required | Population             |
+| --------- | ---- | -------- | ---------------------- |
+| cityId    | ID   | true     | request.params?.cityId |
 
 To access the api you can use the **REST** controller with the path **GET /cities/:cityId**
 
@@ -737,15 +970,18 @@ Following JSON represents the most comprehensive form of the **`city`** object i
 }
 ```
 
-## Route: get-cities
+## Route:
+
+_Route Type_ : getList
+_Default access route_ : _GET_ `/cities`
 
 ### Parameters
 
 The get-cities api has got 1 parameter
 
-| Parameter | Type | Required | Population              |
-| --------- | ---- | -------- | ----------------------- |
-| countryId | ID   |          | request.query.countryId |
+| Parameter | Type | Required | Population               |
+| --------- | ---- | -------- | ------------------------ |
+| countryId | ID   |          | request.query?.countryId |
 
 To access the api you can use the **REST** controller with the path **GET /cities**
 
@@ -783,17 +1019,20 @@ Following JSON represents the most comprehensive form of the **`cities`** object
 }
 ```
 
-## Route: create-city
+## Route:
+
+_Route Type_ : create
+_Default access route_ : _POST_ `/cities`
 
 ### Parameters
 
 The create-city api has got 3 parameters
 
-| Parameter | Type    | Required | Population             |
-| --------- | ------- | -------- | ---------------------- |
-| cityName  | String  |          | request.body.cityName  |
-| countryId | ID      |          | request.body.countryId |
-| published | Boolean |          | request.body.published |
+| Parameter | Type    | Required | Population              |
+| --------- | ------- | -------- | ----------------------- |
+| cityName  | String  |          | request.body?.cityName  |
+| countryId | ID      |          | request.body?.countryId |
+| published | Boolean |          | request.body?.published |
 
 To access the api you can use the **REST** controller with the path **POST /cities**
 

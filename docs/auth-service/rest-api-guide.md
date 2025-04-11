@@ -267,6 +267,18 @@ _User Resource Properties_
 | **emailVerified** | Boolean | | | _A boolean value to represent the email verification status of the user._ |
 | **organizerId** | ID | | | _An ID value to represent the tenant id of the organizer_ |
 
+### Enum Properties
+
+Enum properties are represented as Small Integer values (0-255) in the database. The values are mapped to their corresponding names in the application layer.
+
+#### sex Enum Property
+
+_Enum Options_
+| Name | Value |
+| ---- | ----- |
+| **male** | 0 |
+| **female** | 1 |
+
 ### Organizer resource
 
 _Resource Definition_ : A data object that stores the information for organizer
@@ -288,21 +300,20 @@ _Default access route_ : _POST_ `/users`
 
 ### Parameters
 
-The create-user api has got 11 parameters
+The create-user api has got 10 parameters
 
-| Parameter      | Type    | Required | Population                      |
-| -------------- | ------- | -------- | ------------------------------- |
-| email          | String  |          | request.body.email              |
-| password       | String  |          | request.body.password           |
-| fullname       | String  |          | request.body.fullname           |
-| avatar         | String  |          | request.body.avatar             |
-| roleId         | String  |          | request.body.roleId             |
-| mobile         | String  |          | request.body.mobile             |
-| mobileVerified | Boolean |          | request.body.mobileVerified     |
-| age            | Integer |          | request.body.age                |
-| sex            | Enum    |          | request.body.sex                |
-| emailVerified  | Boolean |          | request.body.emailVerified      |
-| organizerId    | ID      |          | request.header.mbx-organizer-id |
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| email          | String  |          | request.body?.email          |
+| password       | String  |          | request.body?.password       |
+| fullname       | String  |          | request.body?.fullname       |
+| avatar         | String  |          | request.body?.avatar         |
+| roleId         | String  |          | request.body?.roleId         |
+| mobile         | String  |          | request.body?.mobile         |
+| mobileVerified | Boolean |          | request.body?.mobileVerified |
+| age            | Integer |          | request.body?.age            |
+| sex            | Enum    |          | request.body?.sex            |
+| emailVerified  | Boolean |          | request.body?.emailVerified  |
 
 To access the route the session should validated across these validations.
 
@@ -370,24 +381,23 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
 ## Route:
 
-_Route Definition_ : This route is used by users to uğdate their profiles.
+_Route Definition_ : This route is used by users to update their profiles.
 _Route Type_ : update
 _Default access route_ : _PATCH_ `/users/:userId`
 
 ### Parameters
 
-The update-user api has got 8 parameters
+The update-user api has got 7 parameters
 
-| Parameter   | Type    | Required | Population                      |
-| ----------- | ------- | -------- | ------------------------------- |
-| password    | String  | false    | request.body.password           |
-| fullname    | String  | false    | request.body.fullname           |
-| avatar      | String  | false    | request.body.avatar             |
-| mobile      | String  | false    | request.body.mobile             |
-| age         | Integer | false    | request.body.age                |
-| sex         | Enum    | false    | request.body.sex                |
-| organizerId | ID      |          | request.header.mbx-organizer-id |
-| userId      | ID      | true     | request.params.userId           |
+| Parameter | Type    | Required | Population             |
+| --------- | ------- | -------- | ---------------------- |
+| password  | String  | false    | request.body?.password |
+| fullname  | String  | false    | request.body?.fullname |
+| avatar    | String  | false    | request.body?.avatar   |
+| mobile    | String  | false    | request.body?.mobile   |
+| age       | Integer | false    | request.body?.age      |
+| sex       | Enum    | false    | request.body?.sex      |
+| userId    | ID      | true     | request.params?.userId |
 
 To access the api you can use the **REST** controller with the path **PATCH /users/:userId**
 
@@ -438,18 +448,12 @@ _Default access route_ : _PATCH_ `/userroles/:userId`
 
 ### Parameters
 
-The update-userrole api has got 8 parameters
+The update-userrole api has got 2 parameters
 
-| Parameter   | Type    | Required | Population                      |
-| ----------- | ------- | -------- | ------------------------------- |
-| password    | String  | false    | request.body.password           |
-| fullname    | String  | false    | request.body.fullname           |
-| avatar      | String  | false    | request.body.avatar             |
-| mobile      | String  | false    | request.body.mobile             |
-| age         | Integer | false    | request.body.age                |
-| sex         | Enum    | false    | request.body.sex                |
-| organizerId | ID      |          | request.header.mbx-organizer-id |
-| userId      | ID      | true     | request.params.userId           |
+| Parameter | Type | Required | Population             |
+| --------- | ---- | -------- | ---------------------- |
+| roleId    | ID   | true     | request.body?.roleId   |
+| userId    | ID   | true     | request.params?.userId |
 
 To access the route the session should validated across these validations.
 
@@ -477,12 +481,7 @@ axios({
   method: "PATCH",
   url: `/userroles/${userId}`,
   data: {
-    password: "String",
-    fullname: "String",
-    avatar: "String",
-    mobile: "String",
-    age: "Integer",
-    sex: "Enum",
+    roleId: "ID",
   },
   params: {},
 });
@@ -519,21 +518,20 @@ _Default access route_ : _POST_ `/tenantusers`
 
 ### Parameters
 
-The register-tenantuser api has got 11 parameters
+The register-tenantuser api has got 10 parameters
 
-| Parameter      | Type    | Required | Population                      |
-| -------------- | ------- | -------- | ------------------------------- |
-| email          | String  |          | request.body.email              |
-| password       | String  |          | request.body.password           |
-| fullname       | String  |          | request.body.fullname           |
-| avatar         | String  |          | request.body.avatar             |
-| roleId         | String  |          | request.body.roleId             |
-| mobile         | String  |          | request.body.mobile             |
-| mobileVerified | Boolean |          | request.body.mobileVerified     |
-| age            | Integer |          | request.body.age                |
-| sex            | Enum    |          | request.body.sex                |
-| emailVerified  | Boolean |          | request.body.emailVerified      |
-| organizerId    | ID      |          | request.header.mbx-organizer-id |
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| email          | String  |          | request.body?.email          |
+| password       | String  |          | request.body?.password       |
+| fullname       | String  |          | request.body?.fullname       |
+| avatar         | String  |          | request.body?.avatar         |
+| roleId         | String  |          | request.body?.roleId         |
+| mobile         | String  |          | request.body?.mobile         |
+| mobileVerified | Boolean |          | request.body?.mobileVerified |
+| age            | Integer |          | request.body?.age            |
+| sex            | Enum    |          | request.body?.sex            |
+| emailVerified  | Boolean |          | request.body?.emailVerified  |
 
 To access the api you can use the **REST** controller with the path **POST /tenantusers**
 
@@ -588,22 +586,21 @@ _Default access route_ : _POST_ `/tenantowners`
 
 ### Parameters
 
-The register-tenantowner api has got 12 parameters
+The register-tenantowner api has got 11 parameters
 
-| Parameter      | Type    | Required | Population                      |
-| -------------- | ------- | -------- | ------------------------------- |
-| email          | String  |          | request.body.email              |
-| password       | String  |          | request.body.password           |
-| fullname       | String  |          | request.body.fullname           |
-| avatar         | String  |          | request.body.avatar             |
-| roleId         | String  |          | request.body.roleId             |
-| mobile         | String  |          | request.body.mobile             |
-| mobileVerified | Boolean |          | request.body.mobileVerified     |
-| age            | Integer |          | request.body.age                |
-| sex            | Enum    |          | request.body.sex                |
-| emailVerified  | Boolean |          | request.body.emailVerified      |
-| organizer      | Object  |          | request.body.organizer          |
-| organizerId    | ID      |          | request.header.mbx-organizer-id |
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| email          | String  |          | request.body?.email          |
+| password       | String  |          | request.body?.password       |
+| fullname       | String  |          | request.body?.fullname       |
+| avatar         | String  |          | request.body?.avatar         |
+| roleId         | String  |          | request.body?.roleId         |
+| mobile         | String  |          | request.body?.mobile         |
+| mobileVerified | Boolean |          | request.body?.mobileVerified |
+| age            | Integer |          | request.body?.age            |
+| sex            | Enum    |          | request.body?.sex            |
+| emailVerified  | Boolean |          | request.body?.emailVerified  |
+| organizer      | Object  |          | request.body?.organizer      |
 
 To access the api you can use the **REST** controller with the path **POST /tenantowners**
 
@@ -659,12 +656,11 @@ _Default access route_ : _GET_ `/users/:userId`
 
 ### Parameters
 
-The retrive-user api has got 2 parameters
+The retrive-user api has got 1 parameter
 
-| Parameter   | Type | Required | Population                      |
-| ----------- | ---- | -------- | ------------------------------- |
-| organizerId | ID   |          | request.header.mbx-organizer-id |
-| userId      | ID   | true     | request.params.userId           |
+| Parameter | Type | Required | Population             |
+| --------- | ---- | -------- | ---------------------- |
+| userId    | ID   | true     | request.params?.userId |
 
 To access the api you can use the **REST** controller with the path **GET /users/:userId**
 
@@ -706,13 +702,7 @@ _Route Definition_ : The list of users is filtered by the tenantId.
 _Route Type_ : getList
 _Default access route_ : _GET_ `/users`
 
-### Parameters
-
-The list-users api has got 1 parameter
-
-| Parameter   | Type | Required | Population                      |
-| ----------- | ---- | -------- | ------------------------------- |
-| organizerId | ID   |          | request.header.mbx-organizer-id |
+The list-users api has got no parameters.
 
 To access the api you can use the **REST** controller with the path **GET /users**
 
@@ -755,16 +745,15 @@ _Default access route_ : _POST_ `/organizers`
 
 ### Parameters
 
-The create-organizer api has got 6 parameters
+The create-organizer api has got 5 parameters
 
-| Parameter | Type   | Required | Population             |
-| --------- | ------ | -------- | ---------------------- |
-| name      | String |          | request.body.name      |
-| codename  | String |          | request.body.codename  |
-| fullname  | String |          | request.body.fullname  |
-| avatar    | String |          | request.body.avatar    |
-| ownerId   | ID     |          | request.session.userId |
-| brandName | String |          | request.body.brandName |
+| Parameter | Type   | Required | Population              |
+| --------- | ------ | -------- | ----------------------- |
+| name      | String |          | request.body?.name      |
+| codename  | String |          | request.body?.codename  |
+| fullname  | String |          | request.body?.fullname  |
+| avatar    | String |          | request.body?.avatar    |
+| brandName | String |          | request.body?.brandName |
 
 To access the api you can use the **REST** controller with the path **POST /organizers**
 
@@ -816,9 +805,9 @@ _Default access route_ : _GET_ `/organizers/:organizerId`
 
 The retrive-organizer api has got 1 parameter
 
-| Parameter   | Type | Required | Population                 |
-| ----------- | ---- | -------- | -------------------------- |
-| organizerId | ID   | true     | request.params.organizerId |
+| Parameter   | Type | Required | Population                  |
+| ----------- | ---- | -------- | --------------------------- |
+| organizerId | ID   | true     | request.params?.organizerId |
 
 To access the api you can use the **REST** controller with the path **GET /organizers/:organizerId**
 
@@ -864,9 +853,9 @@ _Default access route_ : _GET_ `/organizerbycodename/:codename`
 
 The retriveByCode-organizer api has got 1 parameter
 
-| Parameter | Type   | Required | Population              |
-| --------- | ------ | -------- | ----------------------- |
-| codename  | String | true     | request.params.codename |
+| Parameter | Type   | Required | Population               |
+| --------- | ------ | -------- | ------------------------ |
+| codename  | String | true     | request.params?.codename |
 
 To access the api you can use the **REST** controller with the path **GET /organizerbycodename/:codename**
 
@@ -908,13 +897,7 @@ _Route Definition_ : Get a list of organizer, this route can be called by saas u
 _Route Type_ : getList
 _Default access route_ : _GET_ `/userorganizers`
 
-### Parameters
-
-The list-userorganizer api has got 1 parameter
-
-| Parameter | Type | Required | Population             |
-| --------- | ---- | -------- | ---------------------- |
-| ownerId   | ID   | true     | request.session.userId |
+The list-userorganizer api has got no parameters.
 
 To access the api you can use the **REST** controller with the path **GET /userorganizers**
 
