@@ -257,9 +257,9 @@ Auth service provides the following resources which are stored in its own databa
 | **sex** | Enum |  |  | *The sex of the user. * |
 | **emailVerified** | Boolean |  |  | *A boolean value to represent the email verification status of the user.* |
 | **organizerId** | ID |  |  | *An ID value to represent the tenant id of the organizer* |
-### Enum Properties
+#### Enum Properties
 Enum properties are represented as Small Integer values (0-255) in the database. The values are mapped to their corresponding names in the application layer.
-#### sex Enum Property
+##### sex Enum Property
 *Enum Options*
 | Name | Value | 
 | ---- | ----- |
@@ -294,13 +294,15 @@ Enum properties are represented as Small Integer values (0-255) in the database.
 | **avatar** | String |  |  | *The avatar icon of the client.* |
 | **ownerId** | ID |  |  | *An ID value to represent the user id of organizer owner who created the tenant* |
 | **brandName** | String |  |  | *The brandname of the organizer. It wlll be different than the name.* |
-
-## Route: 
+## Crud Routes
+### Route: create-user
 *Route Definition* : This route is used by admin roles to create a new user manually from admin panels
+
 *Route Type* : create
+
 *Default access route* : *POST* `/users`
 
-###  Parameters
+####  Parameters
 The create-user api has got 10 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -375,12 +377,14 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
   
 
-## Route: 
+### Route: update-user
 *Route Definition* : This route is used by users to update their profiles.
+
 *Route Type* : update
+
 *Default access route* : *PATCH* `/users/:userId`
 
-###  Parameters
+####  Parameters
 The update-user api has got 7 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -431,12 +435,14 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
   
 
-## Route: 
+### Route: update-userrole
 *Route Definition* : This route is used by admin roles to update the user role.The default role is tenantUser when a tenant user is registered. A tenant user&#39;s role can be updated by tenantAdmin, while saas user&#39;s role is updated by superAdmin or saasAdmin
+
 *Route Type* : update
+
 *Default access route* : *PATCH* `/userroles/:userId`
 
-###  Parameters
+####  Parameters
 The update-userrole api has got 2 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -494,12 +500,14 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
   
 
-## Route: 
+### Route: register-tenantuser
 *Route Definition* : This route is used by public users to register themselves to tenants that are created by tenant owners.
+
 *Route Type* : create
+
 *Default access route* : *POST* `/tenantusers`
 
-###  Parameters
+####  Parameters
 The register-tenantuser api has got 10 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -557,12 +565,14 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
   
 
-## Route: 
+### Route: register-tenantowner
 *Route Definition* : This route is used by public users to register themselves as tenant owners to create both a user account and a organizer account they own.
+
 *Route Type* : create
+
 *Default access route* : *POST* `/tenantowners`
 
-###  Parameters
+####  Parameters
 The register-tenantowner api has got 11 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -622,12 +632,14 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
   
 
-## Route: 
+### Route: retrive-user
 *Route Definition* : This route is used by admin roles or the users themselves to get the user profile information.
+
 *Route Type* : get
+
 *Default access route* : *GET* `/users/:userId`
 
-###  Parameters
+####  Parameters
 The retrive-user api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -666,9 +678,11 @@ Following JSON represents the most comprehensive form of the **`user`** object i
 
   
 
-## Route: 
+### Route: list-users
 *Route Definition* : The list of users is filtered by the tenantId.
+
 *Route Type* : getList
+
 *Default access route* : *GET* `/users`
 
 The list-users api has got no parameters.    
@@ -705,12 +719,14 @@ Following JSON represents the most comprehensive form of the **`users`** object 
 
   
 
-## Route: 
+### Route: create-usergroup
 *Route Definition* : This route is used by admin roles to create a new usergroup manually from admin panels
+
 *Route Type* : create
+
 *Default access route* : *POST* `/usergroups`
 
-###  Parameters
+####  Parameters
 The create-usergroup api has got 2 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -769,12 +785,14 @@ Following JSON represents the most comprehensive form of the **`userGroup`** obj
 
   
 
-## Route: 
+### Route: update-usergroup
 *Route Definition* : This route is used by admin to update user groups.
+
 *Route Type* : update
+
 *Default access route* : *PATCH* `/usergroups/:userGroupId`
 
-###  Parameters
+####  Parameters
 The update-usergroup api has got 3 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -817,12 +835,14 @@ Following JSON represents the most comprehensive form of the **`userGroup`** obj
 
   
 
-## Route: 
+### Route: retrive-usergroup
 *Route Definition* : This route is used by admin roles or the users to get the user group information.
+
 *Route Type* : get
+
 *Default access route* : *GET* `/usergroups/:userGroupId`
 
-###  Parameters
+####  Parameters
 The retrive-usergroup api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -861,9 +881,11 @@ Following JSON represents the most comprehensive form of the **`userGroup`** obj
 
   
 
-## Route: 
+### Route: list-usergroups
 *Route Definition* : This route is used by admin or user roles to get the list of groups.
+
 *Route Type* : getList
+
 *Default access route* : *GET* `/usergroups`
 
 The list-usergroups api has got no parameters.    
@@ -900,12 +922,14 @@ Following JSON represents the most comprehensive form of the **`userGroups`** ob
 
   
 
-## Route: 
+### Route: create-usergroupmember
 *Route Definition* : This route is used by admin roles to add a user to a group.
+
 *Route Type* : create
+
 *Default access route* : *POST* `/usergroupmembers`
 
-###  Parameters
+####  Parameters
 The create-usergroupmember api has got 2 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -964,12 +988,14 @@ Following JSON represents the most comprehensive form of the **`userGroupMember`
 
   
 
-## Route: 
+### Route: delete-usergroupmember
 *Route Definition* : This route is used by admin to delete a member from a group.
+
 *Route Type* : delete
+
 *Default access route* : *DELETE* `/usergroupmembers/:userGroupMemberId`
 
-###  Parameters
+####  Parameters
 The delete-usergroupmember api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -1008,12 +1034,14 @@ Following JSON represents the most comprehensive form of the **`userGroupMember`
 
   
 
-## Route: 
+### Route: retrive-usergroupmember
 *Route Definition* : This route is used by admin roles or the users to get the user group member information.
+
 *Route Type* : get
+
 *Default access route* : *GET* `/usergroupmembers/:userGroupMemberId`
 
-###  Parameters
+####  Parameters
 The retrive-usergroupmember api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -1052,12 +1080,14 @@ Following JSON represents the most comprehensive form of the **`userGroupMember`
 
   
 
-## Route: 
+### Route: list-usergroupmembers
 *Route Definition* : This route is used by admin or user roles to get the list of group members of a group.
+
 *Route Type* : getList
+
 *Default access route* : *GET* `/usergroupmembers`
 
-###  Parameters
+####  Parameters
 The list-usergroupmembers api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -1097,12 +1127,14 @@ Following JSON represents the most comprehensive form of the **`userGroupMembers
 
   
 
-## Route: 
+### Route: create-organizer
+
 
 *Route Type* : create
+
 *Default access route* : *POST* `/organizers`
 
-###  Parameters
+####  Parameters
 The create-organizer api has got 5 parameters  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -1150,12 +1182,14 @@ Following JSON represents the most comprehensive form of the **`organizer`** obj
 
   
 
-## Route: 
+### Route: retrive-organizer
 *Route Definition* : Get a organizer by id. A public route which cab be called without login
+
 *Route Type* : get
+
 *Default access route* : *GET* `/organizers/:organizerId`
 
-###  Parameters
+####  Parameters
 The retrive-organizer api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -1194,12 +1228,14 @@ Following JSON represents the most comprehensive form of the **`organizer`** obj
 
   
 
-## Route: 
+### Route: retriveByCode-organizer
 *Route Definition* : Get organizer by codename to use the i in the header to make tenant specific calls. A public route which cab be called without login
+
 *Route Type* : get
+
 *Default access route* : *GET* `/organizerbycodename/:codename`
 
-###  Parameters
+####  Parameters
 The retriveByCode-organizer api has got 1 parameter  
 
 | Parameter              | Type                   | Required | Population                   |
@@ -1238,9 +1274,11 @@ Following JSON represents the most comprehensive form of the **`organizer`** obj
 
   
 
-## Route: 
+### Route: list-userorganizer
 *Route Definition* : Get a list of organizer, this route can be called by saas user and close to tenant level
+
 *Route Type* : getList
+
 *Default access route* : *GET* `/userorganizers`
 
 The list-userorganizer api has got no parameters.    
