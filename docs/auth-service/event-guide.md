@@ -161,6 +161,160 @@ This event announces the deletion of a `user` data object, covering both hard de
 }
 ```
 
+## DbEvent userGroup-created
+
+**Event topic**: `tickatme-auth-service-dbevent-usergroup-created`
+
+This event is triggered upon the creation of a `userGroup` data object in the database. The event payload encompasses the newly created data, encapsulated within the root of the paylod.
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupName": "String",
+  "avatar": "String",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## DbEvent userGroup-updated
+
+**Event topic**: `tickatme-auth-service-dbevent-usergroup-updated`
+
+Activation of this event follows the update of a `userGroup` data object. The payload contains the updated information under the `userGroup` attribute, along with the original data prior to update, labeled as `old_userGroup`.
+
+**Event payload**:
+
+```json
+{
+  "old_userGroup": {
+    "id": "ID",
+    "_owner": "ID",
+    "groupName": "String",
+    "avatar": "String",
+    "isActive": true,
+    "recordVersion": "Integer",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  },
+  "userGroup": {
+    "id": "ID",
+    "_owner": "ID",
+    "groupName": "String",
+    "avatar": "String",
+    "isActive": true,
+    "recordVersion": "Integer",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+## DbEvent userGroup-deleted
+
+**Event topic**: `tickatme-auth-service-dbevent-usergroup-deleted`
+
+This event announces the deletion of a `userGroup` data object, covering both hard deletions (permanent removal) and soft deletions (where the `isActive` attribute is set to false). Regardless of the deletion type, the event payload will present the data as it was immediately before deletion, highlighting an `isActive` status of false for soft deletions.
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupName": "String",
+  "avatar": "String",
+  "isActive": false,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## DbEvent userGroupMember-created
+
+**Event topic**: `tickatme-auth-service-dbevent-usergroupmember-created`
+
+This event is triggered upon the creation of a `userGroupMember` data object in the database. The event payload encompasses the newly created data, encapsulated within the root of the paylod.
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupId": "ID",
+  "userId": "ID",
+  "ownerId": "ID",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## DbEvent userGroupMember-updated
+
+**Event topic**: `tickatme-auth-service-dbevent-usergroupmember-updated`
+
+Activation of this event follows the update of a `userGroupMember` data object. The payload contains the updated information under the `userGroupMember` attribute, along with the original data prior to update, labeled as `old_userGroupMember`.
+
+**Event payload**:
+
+```json
+{
+  "old_userGroupMember": {
+    "id": "ID",
+    "_owner": "ID",
+    "groupId": "ID",
+    "userId": "ID",
+    "ownerId": "ID",
+    "isActive": true,
+    "recordVersion": "Integer",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  },
+  "userGroupMember": {
+    "id": "ID",
+    "_owner": "ID",
+    "groupId": "ID",
+    "userId": "ID",
+    "ownerId": "ID",
+    "isActive": true,
+    "recordVersion": "Integer",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+## DbEvent userGroupMember-deleted
+
+**Event topic**: `tickatme-auth-service-dbevent-usergroupmember-deleted`
+
+This event announces the deletion of a `userGroupMember` data object, covering both hard deletions (permanent removal) and soft deletions (where the `isActive` attribute is set to false). Regardless of the deletion type, the event payload will present the data as it was immediately before deletion, highlighting an `isActive` status of false for soft deletions.
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupId": "ID",
+  "userId": "ID",
+  "ownerId": "ID",
+  "isActive": false,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
 ## DbEvent organizer-created
 
 **Event topic**: `tickatme-auth-service-dbevent-organizer-created`
@@ -576,6 +730,1505 @@ The following JSON included in the payload illustrates the fullest representatio
 }
 ```
 
+## Route Event usergroup-created
+
+**Event topic** : `tickatme-auth-service-usergroup-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-updated
+
+**Event topic** : `tickatme-auth-service-usergroup-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-retrived
+
+**Event topic** : `tickatme-auth-service-usergroup-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroups-listed
+
+**Event topic** : `tickatme-auth-service-usergroups-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroups` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroups`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroups",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroups": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-created
+
+**Event topic** : `tickatme-auth-service-usergroupmember-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-deleted
+
+**Event topic** : `tickatme-auth-service-usergroupmember-deleted`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "delete",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": false }
+}
+```
+
+## Route Event usergroupmember-retrived
+
+**Event topic** : `tickatme-auth-service-usergroupmember-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmembers-listed
+
+**Event topic** : `tickatme-auth-service-usergroupmembers-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMembers` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMembers`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMembers",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMembers": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event organizer-created
+
+**Event topic** : `tickatme-auth-service-organizer-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizer` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizer`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizer",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizer": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event organizer-retrived
+
+**Event topic** : `tickatme-auth-service-organizer-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizer` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizer`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizer",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizer": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event organizer-retriveByCoded
+
+**Event topic** : `tickatme-auth-service-organizer-retrivebycoded`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizer` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizer`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizer",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizer": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event userorganizer-listed
+
+**Event topic** : `tickatme-auth-service-userorganizer-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizers` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizers`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizers",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizers": { "id": "ID", "isActive": true }
+}
+```
+
+## Index Event usergroup-created
+
+**Event topic**: `elastic-index-tickatme_usergroup-created`
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupName": "String",
+  "avatar": "String",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## Index Event usergroup-updated
+
+**Event topic**: `elastic-index-tickatme_usergroup-created`
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupName": "String",
+  "avatar": "String",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## Index Event usergroup-deleted
+
+**Event topic**: `elastic-index-tickatme_usergroup-deleted`
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupName": "String",
+  "avatar": "String",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## Index Event usergroup-extended
+
+**Event topic**: `elastic-index-tickatme_usergroup-extended`
+
+**Event payload**:
+
+```js
+{
+  id: id,
+  extends: {
+    [extendName]: "Object",
+    [extendName + "_count"]: "Number",
+  },
+}
+```
+
+# Route Events
+
+Route events are emitted following the successful execution of a route. While most routes perform CRUD (Create, Read, Update, Delete) operations on data objects, resulting in route events that closely resemble database events, there are distinctions worth noting. A single route execution might trigger multiple CRUD actions and ElasticSearch indexing operations. However, for those primarily concerned with the overarching business logic and its outcomes, listening to the consolidated route event, published once at the conclusion of the route's execution, is more pertinent.
+
+Moreover, routes often deliver aggregated data beyond the primary database object, catering to specific client needs. For instance, creating a data object via a route might not only return the entity's data but also route-specific metrics, such as the executing user's permissions related to the entity. Alternatively, a route might automatically generate default child entities following the creation of a parent object. Consequently, the route event encapsulates a unified dataset encompassing both the parent and its children, in contrast to individual events triggered for each entity created. Therefore, subscribing to route events can offer a richer, more contextually relevant set of information aligned with business logic.
+
+The payload of a route event mirrors the REST response JSON of the route, providing a direct and comprehensive reflection of the data and metadata communicated to the client. This ensures that subscribers to route events receive a payload that encapsulates both the primary data involved and any additional information deemed significant at the business level, facilitating a deeper understanding and integration of the service's functional outcomes.
+
+## Route Event user-created
+
+**Event topic** : `tickatme-auth-service-user-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event user-updated
+
+**Event topic** : `tickatme-auth-service-user-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event userrole-updated
+
+**Event topic** : `tickatme-auth-service-userrole-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event tenantuser-registerred
+
+**Event topic** : `tickatme-auth-service-tenantuser-registerred`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event tenantowner-registerred
+
+**Event topic** : `tickatme-auth-service-tenantowner-registerred`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event user-retrived
+
+**Event topic** : `tickatme-auth-service-user-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event users-listed
+
+**Event topic** : `tickatme-auth-service-users-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `users` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`users`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "users",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "users": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-created
+
+**Event topic** : `tickatme-auth-service-usergroup-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-updated
+
+**Event topic** : `tickatme-auth-service-usergroup-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-retrived
+
+**Event topic** : `tickatme-auth-service-usergroup-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroups-listed
+
+**Event topic** : `tickatme-auth-service-usergroups-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroups` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroups`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroups",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroups": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-created
+
+**Event topic** : `tickatme-auth-service-usergroupmember-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-deleted
+
+**Event topic** : `tickatme-auth-service-usergroupmember-deleted`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "delete",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": false }
+}
+```
+
+## Route Event usergroupmember-retrived
+
+**Event topic** : `tickatme-auth-service-usergroupmember-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmembers-listed
+
+**Event topic** : `tickatme-auth-service-usergroupmembers-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMembers` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMembers`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMembers",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMembers": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event organizer-created
+
+**Event topic** : `tickatme-auth-service-organizer-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizer` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizer`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizer",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizer": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event organizer-retrived
+
+**Event topic** : `tickatme-auth-service-organizer-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizer` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizer`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizer",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizer": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event organizer-retriveByCoded
+
+**Event topic** : `tickatme-auth-service-organizer-retrivebycoded`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizer` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizer`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizer",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizer": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event userorganizer-listed
+
+**Event topic** : `tickatme-auth-service-userorganizer-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `organizers` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`organizers`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "organizers",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "organizers": { "id": "ID", "isActive": true }
+}
+```
+
+## Index Event usergroupmember-created
+
+**Event topic**: `elastic-index-tickatme_usergroupmember-created`
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupId": "ID",
+  "userId": "ID",
+  "ownerId": "ID",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## Index Event usergroupmember-updated
+
+**Event topic**: `elastic-index-tickatme_usergroupmember-created`
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupId": "ID",
+  "userId": "ID",
+  "ownerId": "ID",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## Index Event usergroupmember-deleted
+
+**Event topic**: `elastic-index-tickatme_usergroupmember-deleted`
+
+**Event payload**:
+
+```json
+{
+  "id": "ID",
+  "_owner": "ID",
+  "groupId": "ID",
+  "userId": "ID",
+  "ownerId": "ID",
+  "isActive": true,
+  "recordVersion": "Integer",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+## Index Event usergroupmember-extended
+
+**Event topic**: `elastic-index-tickatme_usergroupmember-extended`
+
+**Event payload**:
+
+```js
+{
+  id: id,
+  extends: {
+    [extendName]: "Object",
+    [extendName + "_count"]: "Number",
+  },
+}
+```
+
+# Route Events
+
+Route events are emitted following the successful execution of a route. While most routes perform CRUD (Create, Read, Update, Delete) operations on data objects, resulting in route events that closely resemble database events, there are distinctions worth noting. A single route execution might trigger multiple CRUD actions and ElasticSearch indexing operations. However, for those primarily concerned with the overarching business logic and its outcomes, listening to the consolidated route event, published once at the conclusion of the route's execution, is more pertinent.
+
+Moreover, routes often deliver aggregated data beyond the primary database object, catering to specific client needs. For instance, creating a data object via a route might not only return the entity's data but also route-specific metrics, such as the executing user's permissions related to the entity. Alternatively, a route might automatically generate default child entities following the creation of a parent object. Consequently, the route event encapsulates a unified dataset encompassing both the parent and its children, in contrast to individual events triggered for each entity created. Therefore, subscribing to route events can offer a richer, more contextually relevant set of information aligned with business logic.
+
+The payload of a route event mirrors the REST response JSON of the route, providing a direct and comprehensive reflection of the data and metadata communicated to the client. This ensures that subscribers to route events receive a payload that encapsulates both the primary data involved and any additional information deemed significant at the business level, facilitating a deeper understanding and integration of the service's functional outcomes.
+
+## Route Event user-created
+
+**Event topic** : `tickatme-auth-service-user-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event user-updated
+
+**Event topic** : `tickatme-auth-service-user-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event userrole-updated
+
+**Event topic** : `tickatme-auth-service-userrole-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event tenantuser-registerred
+
+**Event topic** : `tickatme-auth-service-tenantuser-registerred`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event tenantowner-registerred
+
+**Event topic** : `tickatme-auth-service-tenantowner-registerred`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event user-retrived
+
+**Event topic** : `tickatme-auth-service-user-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "user",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "user": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event users-listed
+
+**Event topic** : `tickatme-auth-service-users-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `users` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`users`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "users",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "users": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-created
+
+**Event topic** : `tickatme-auth-service-usergroup-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-updated
+
+**Event topic** : `tickatme-auth-service-usergroup-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-retrived
+
+**Event topic** : `tickatme-auth-service-usergroup-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroups-listed
+
+**Event topic** : `tickatme-auth-service-usergroups-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroups` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroups`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroups",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroups": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-created
+
+**Event topic** : `tickatme-auth-service-usergroupmember-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-deleted
+
+**Event topic** : `tickatme-auth-service-usergroupmember-deleted`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "delete",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": false }
+}
+```
+
+## Route Event usergroupmember-retrived
+
+**Event topic** : `tickatme-auth-service-usergroupmember-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmembers-listed
+
+**Event topic** : `tickatme-auth-service-usergroupmembers-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMembers` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMembers`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMembers",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMembers": { "id": "ID", "isActive": true }
+}
+```
+
 ## Route Event organizer-created
 
 **Event topic** : `tickatme-auth-service-organizer-created`
@@ -985,6 +2638,238 @@ The following JSON included in the payload illustrates the fullest representatio
   "appVersion": "Version",
   "rowCount": 1,
   "users": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-created
+
+**Event topic** : `tickatme-auth-service-usergroup-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-updated
+
+**Event topic** : `tickatme-auth-service-usergroup-updated`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroup-retrived
+
+**Event topic** : `tickatme-auth-service-usergroup-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroup` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroup`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroup",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroup": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroups-listed
+
+**Event topic** : `tickatme-auth-service-usergroups-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroups` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroups`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroups",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroups": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-created
+
+**Event topic** : `tickatme-auth-service-usergroupmember-created`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmember-deleted
+
+**Event topic** : `tickatme-auth-service-usergroupmember-deleted`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "delete",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": false }
+}
+```
+
+## Route Event usergroupmember-retrived
+
+**Event topic** : `tickatme-auth-service-usergroupmember-retrived`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMember` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMember`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMember",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMember": { "id": "ID", "isActive": true }
+}
+```
+
+## Route Event usergroupmembers-listed
+
+**Event topic** : `tickatme-auth-service-usergroupmembers-listed`
+
+**Event payload**:
+
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `userGroupMembers` data object itself.
+
+The following JSON included in the payload illustrates the fullest representation of the **`userGroupMembers`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "userGroupMembers",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "userGroupMembers": { "id": "ID", "isActive": true }
 }
 ```
 

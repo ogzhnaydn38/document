@@ -265,6 +265,23 @@ Enum properties are represented as Small Integer values (0-255) in the database.
 | ---- | ----- |
 | **male** | 0 | 
 | **female** | 1 | 
+### UserGroup resource
+
+*Resource Definition* : A data object that stores the user group information.
+*UserGroup Resource Properties* 
+| Name | Type | Required | Default | Definition | 
+| ---- | ---- | -------- | ------- | ---------- |
+| **groupName** | String |  |  | * A string value to represent the group name.* |
+| **avatar** | String |  |  | * A string value to represent the groups icon.* |
+### UserGroupMember resource
+
+*Resource Definition* : A data object that stores the members of the user group.
+*UserGroupMember Resource Properties* 
+| Name | Type | Required | Default | Definition | 
+| ---- | ---- | -------- | ------- | ---------- |
+| **groupId** | ID |  |  | * An ID value to represent the group that the user is asssigned as a memeber to.* |
+| **userId** | ID |  |  | * An ID value to represent the user that is assgined as a member to the group.* |
+| **ownerId** | ID |  |  | *An ID value to represent the admin user who assgined the member.* |
 ### Organizer resource
 
 *Resource Definition* : A data object that stores the information for organizer
@@ -683,6 +700,398 @@ Following JSON represents the most comprehensive form of the **`users`** object 
 
 ```json
 {"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"users","action":"getList","appVersion":"Version","rowCount":1,"users":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin roles to create a new usergroup manually from admin panels
+*Route Type* : create
+*Default access route* : *POST* `/usergroups`
+
+###  Parameters
+The create-usergroup api has got 2 parameters  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| groupName  | String  |  | request.body?.groupName |
+| avatar  | String  |  | request.body?.avatar |
+
+  
+
+  
+
+To access the route the session should validated across these validations.
+
+
+
+
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin] roles
+This validation will be executed on layer1
+*/
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin]RoleToAccessRoute"))
+};
+
+``` 
+
+
+
+To access the api you can use the **REST** controller with the path **POST  /usergroups**
+```js
+  axios({
+    method: 'POST',
+    url: '/usergroups',
+    data: {
+            groupName:"String",  
+            avatar:"String",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroup`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroup","action":"create","appVersion":"Version","rowCount":1,"userGroup":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin to update user groups.
+*Route Type* : update
+*Default access route* : *PATCH* `/usergroups/:userGroupId`
+
+###  Parameters
+The update-usergroup api has got 3 parameters  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| groupName  | String  | false | request.body?.groupName |
+| avatar  | String  | false | request.body?.avatar |
+| userGroupId  | ID  | true | request.params?.userGroupId |
+
+  
+
+  
+
+
+
+To access the api you can use the **REST** controller with the path **PATCH  /usergroups/:userGroupId**
+```js
+  axios({
+    method: 'PATCH',
+    url: `/usergroups/${userGroupId}`,
+    data: {
+            groupName:"String",  
+            avatar:"String",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroup`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroup","action":"update","appVersion":"Version","rowCount":1,"userGroup":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin roles or the users to get the user group information.
+*Route Type* : get
+*Default access route* : *GET* `/usergroups/:userGroupId`
+
+###  Parameters
+The retrive-usergroup api has got 1 parameter  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| userGroupId  | ID  | true | request.params?.userGroupId |
+
+  
+
+  
+
+
+
+To access the api you can use the **REST** controller with the path **GET  /usergroups/:userGroupId**
+```js
+  axios({
+    method: 'GET',
+    url: `/usergroups/${userGroupId}`,
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroup`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroup","action":"get","appVersion":"Version","rowCount":1,"userGroup":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin or user roles to get the list of groups.
+*Route Type* : getList
+*Default access route* : *GET* `/usergroups`
+
+The list-usergroups api has got no parameters.    
+
+  
+
+  
+
+
+
+To access the api you can use the **REST** controller with the path **GET  /usergroups**
+```js
+  axios({
+    method: 'GET',
+    url: '/usergroups',
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroups`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroups","action":"getList","appVersion":"Version","rowCount":1,"userGroups":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin roles to add a user to a group.
+*Route Type* : create
+*Default access route* : *POST* `/usergroupmembers`
+
+###  Parameters
+The create-usergroupmember api has got 2 parameters  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| groupId  | ID  |  | request.body?.groupId |
+| userId  | ID  |  | request.body?.userId |
+
+  
+
+  
+
+To access the route the session should validated across these validations.
+
+
+
+
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin] roles
+This validation will be executed on layer1
+*/
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin]RoleToAccessRoute"))
+};
+
+``` 
+
+
+
+To access the api you can use the **REST** controller with the path **POST  /usergroupmembers**
+```js
+  axios({
+    method: 'POST',
+    url: '/usergroupmembers',
+    data: {
+            groupId:"ID",  
+            userId:"ID",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroupMember`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroupMember","action":"create","appVersion":"Version","rowCount":1,"userGroupMember":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin to delete a member from a group.
+*Route Type* : delete
+*Default access route* : *DELETE* `/usergroupmembers/:userGroupMemberId`
+
+###  Parameters
+The delete-usergroupmember api has got 1 parameter  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| userGroupMemberId  | ID  | true | request.params?.userGroupMemberId |
+
+  
+
+  
+
+
+
+To access the api you can use the **REST** controller with the path **DELETE  /usergroupmembers/:userGroupMemberId**
+```js
+  axios({
+    method: 'DELETE',
+    url: `/usergroupmembers/${userGroupMemberId}`,
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroupMember`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroupMember","action":"delete","appVersion":"Version","rowCount":1,"userGroupMember":{"id":"ID","isActive":false}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin roles or the users to get the user group member information.
+*Route Type* : get
+*Default access route* : *GET* `/usergroupmembers/:userGroupMemberId`
+
+###  Parameters
+The retrive-usergroupmember api has got 1 parameter  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| userGroupMemberId  | ID  | true | request.params?.userGroupMemberId |
+
+  
+
+  
+
+
+
+To access the api you can use the **REST** controller with the path **GET  /usergroupmembers/:userGroupMemberId**
+```js
+  axios({
+    method: 'GET',
+    url: `/usergroupmembers/${userGroupMemberId}`,
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroupMember`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroupMember","action":"get","appVersion":"Version","rowCount":1,"userGroupMember":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+## Route: 
+*Route Definition* : This route is used by admin or user roles to get the list of group members of a group.
+*Route Type* : getList
+*Default access route* : *GET* `/usergroupmembers`
+
+###  Parameters
+The list-usergroupmembers api has got 1 parameter  
+
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| groupId  | ID  | true | request.query?.groupId |
+
+  
+
+  
+
+
+
+To access the api you can use the **REST** controller with the path **GET  /usergroupmembers**
+```js
+  axios({
+    method: 'GET',
+    url: '/usergroupmembers',
+    data: {
+    
+    },
+    params: {
+             groupId:'"ID"',  
+    
+    }
+  });
+```     
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`userGroupMembers`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+
+
+```json
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"userGroupMembers","action":"getList","appVersion":"Version","rowCount":1,"userGroupMembers":{"id":"ID","isActive":true}}
 ```  
 
 
