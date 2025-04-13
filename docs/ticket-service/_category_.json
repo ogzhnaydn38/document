@@ -1,0 +1,8 @@
+{
+  "label": "Ticket Service",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Ticket service documents"
+  }
+}
