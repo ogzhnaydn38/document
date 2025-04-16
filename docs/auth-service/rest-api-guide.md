@@ -263,7 +263,7 @@ _User Resource Properties_
 | **mobile** | String | | | _A string value to represent the user&#39;s mobile number._ |
 | **mobileVerified** | Boolean | | | _A boolean value to represent the mobile verification status of the user._ |
 | **age** | Integer | | | _The age of the user_ |
-| **sex** | Enum | | | _The sex of the user. _ |
+| **sex** | Enum | | | _The sex value of the user. _ |
 | **emailVerified** | Boolean | | | _A boolean value to represent the email verification status of the user._ |
 | **organizerId** | ID | | | _An ID value to represent the tenant id of the organizer_ |
 

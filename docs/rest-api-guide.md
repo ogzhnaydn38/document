@@ -254,7 +254,7 @@ Auth service provides the following resources which are stored in its own databa
 | **mobile** | String |  |  | *A string value to represent the user&#39;s mobile number.* |
 | **mobileVerified** | Boolean |  |  | *A boolean value to represent the mobile verification status of the user.* |
 | **age** | Integer |  |  | *The age of the user* |
-| **sex** | Enum |  |  | *The sex of the user. * |
+| **sex** | Enum |  |  | *The sex value of the user. * |
 | **emailVerified** | Boolean |  |  | *A boolean value to represent the email verification status of the user.* |
 | **organizerId** | ID |  |  | *An ID value to represent the tenant id of the organizer* |
 #### Enum Properties
