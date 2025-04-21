@@ -379,6 +379,18 @@ The create-event api has got 14 parameters
 | price         | Float   |          | request.body?.price         |
 | published     | String  |          | request.body?.published     |
 
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the user has the required permissions
+This validation will be executed on layer1
+*/
+if (!this.doCheckPermission("canAddEvent")) {
+  throw new BadRequestError("errMsg_userShouldHavePermissionToAccessRoute");
+}
+```
+
 To access the api you can use the **REST** controller with the path **POST /events**
 
 ```js

@@ -311,6 +311,20 @@ _Organizer Resource Properties_
 | **ownerId** | ID | | | _An ID value to represent the user id of organizer owner who created the tenant_ |
 | **brandName** | String | | | _The brandname of the organizer. It wlll be different than the name._ |
 
+### GivenPermission resource
+
+_Resource Definition_ : A data object that stores the assigment of a specific named permission to a role, usergroup or user for a specific object or for general use.
+_GivenPermission Resource Properties_
+| Name | Type | Required | Default | Definition |
+| ---- | ---- | -------- | ------- | ---------- |
+| **permissionName** | String | | | * A string value to refrence the named permission. It can either reference as groupName.permissionName or permissionName or groupName.** |
+| **roleId\*\* | String | | | *A string value to represent the role name to which the permission is given.* |
+| **subjectUserId** | String | | | *A string value to represent the user ID to whom the permission is given.* |
+| **subjectUserGroupId** | String | | | *A string value to represent the user group ID to which the permission is given.* |
+| **objectId** | String | | | *A string value to represent the object ID for which the permission is given.* |
+| **canDo** | Boolean | | | *A boolean value to represent if the permission is active or not. A specific negative value can override a more general positive value or vice verse.* |
+| **organizerId** | ID | | | *An ID value to represent the tenant id of the organizer\* |
+
 ## Crud Routes
 
 ### Route: create-user
@@ -1421,6 +1435,966 @@ Following JSON represents the most comprehensive form of the **`organizers`** ob
   "appVersion": "Version",
   "rowCount": 1,
   "organizers": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-givenpermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a role/user/usergroup for objects or general use.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/givenpermissions`
+
+#### Parameters
+
+The create-givenpermission api has got 6 parameters
+
+| Parameter          | Type    | Required | Population                       |
+| ------------------ | ------- | -------- | -------------------------------- |
+| permissionName     | String  |          | request.body?.permissionName     |
+| roleId             | String  |          | request.body?.roleId             |
+| subjectUserId      | String  |          | request.body?.subjectUserId      |
+| subjectUserGroupId | String  |          | request.body?.subjectUserGroupId |
+| objectId           | String  |          | request.body?.objectId           |
+| canDo              | Boolean |          | request.body?.canDo              |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /givenpermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/givenpermissions",
+  data: {
+    permissionName: "String",
+    roleId: "String",
+    subjectUserId: "String",
+    subjectUserGroupId: "String",
+    objectId: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-rolepermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a role.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/rolepermissions`
+
+#### Parameters
+
+The create-rolepermission api has got 3 parameters
+
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| roleId         | String  | true     | request.body?.roleId         |
+| permissionName | String  | true     | request.body?.permissionName |
+| canDo          | Boolean | true     | request.body?.canDo          |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /rolepermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/rolepermissions",
+  data: {
+    roleId: "String",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-userpermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a user.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/userpermissions`
+
+#### Parameters
+
+The create-userpermission api has got 3 parameters
+
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| subjectUserId  | ID      | true     | request.body?.subjectUserId  |
+| permissionName | String  | true     | request.body?.permissionName |
+| canDo          | Boolean | true     | request.body?.canDo          |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /userpermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/userpermissions",
+  data: {
+    subjectUserId: "ID",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-grouppermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a user group.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/grouppermissions`
+
+#### Parameters
+
+The create-grouppermission api has got 3 parameters
+
+| Parameter          | Type    | Required | Population                       |
+| ------------------ | ------- | -------- | -------------------------------- |
+| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
+| permissionName     | String  | true     | request.body?.permissionName     |
+| canDo              | Boolean | true     | request.body?.canDo              |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /grouppermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/grouppermissions",
+  data: {
+    subjectUserGroupId: "ID",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-rolegrouppermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a role and user group. The permission is given to the users of the group who has the role.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/rolegrouppermissions`
+
+#### Parameters
+
+The create-rolegrouppermission api has got 4 parameters
+
+| Parameter          | Type    | Required | Population                       |
+| ------------------ | ------- | -------- | -------------------------------- |
+| roleId             | String  | true     | request.body?.roleId             |
+| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
+| permissionName     | String  | true     | request.body?.permissionName     |
+| canDo              | Boolean | true     | request.body?.canDo              |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /rolegrouppermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/rolegrouppermissions",
+  data: {
+    roleId: "String",
+    subjectUserGroupId: "ID",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-objectpermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a user for an object.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/objectpermissions`
+
+#### Parameters
+
+The create-objectpermission api has got 4 parameters
+
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| objectId       | ID      | true     | request.body?.objectId       |
+| subjectUserId  | ID      | true     | request.body?.subjectUserId  |
+| permissionName | String  | true     | request.body?.permissionName |
+| canDo          | Boolean | true     | request.body?.canDo          |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /objectpermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/objectpermissions",
+  data: {
+    objectId: "ID",
+    subjectUserId: "ID",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-objectgrouppermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a user group for an object.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/objectgrouppermissions`
+
+#### Parameters
+
+The create-objectgrouppermission api has got 4 parameters
+
+| Parameter          | Type    | Required | Population                       |
+| ------------------ | ------- | -------- | -------------------------------- |
+| objectId           | ID      | true     | request.body?.objectId           |
+| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
+| permissionName     | String  | true     | request.body?.permissionName     |
+| canDo              | Boolean | true     | request.body?.canDo              |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /objectgrouppermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/objectgrouppermissions",
+  data: {
+    objectId: "ID",
+    subjectUserGroupId: "ID",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-objectrolepermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a role for an object.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/objectrolepermissions`
+
+#### Parameters
+
+The create-objectrolepermission api has got 4 parameters
+
+| Parameter      | Type    | Required | Population                   |
+| -------------- | ------- | -------- | ---------------------------- |
+| objectId       | ID      | true     | request.body?.objectId       |
+| roleId         | String  | true     | request.body?.roleId         |
+| permissionName | String  | true     | request.body?.permissionName |
+| canDo          | Boolean | true     | request.body?.canDo          |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /objectrolepermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/objectrolepermissions",
+  data: {
+    objectId: "ID",
+    roleId: "String",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: create-objectgrouprolepermission
+
+_Route Definition_ : This route is used by admin to create a new permission assignment to a role and user group for an object. The permission to acess(or not) the object is given to the users of the group who has the role.
+
+_Route Type_ : create
+
+_Default access route_ : _POST_ `/objectgrouprolepermissions`
+
+#### Parameters
+
+The create-objectgrouprolepermission api has got 5 parameters
+
+| Parameter          | Type    | Required | Population                       |
+| ------------------ | ------- | -------- | -------------------------------- |
+| objectId           | ID      | true     | request.body?.objectId           |
+| roleId             | String  | true     | request.body?.roleId             |
+| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
+| permissionName     | String  | true     | request.body?.permissionName     |
+| canDo              | Boolean | true     | request.body?.canDo              |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **POST /objectgrouprolepermissions**
+
+```js
+axios({
+  method: "POST",
+  url: "/objectgrouprolepermissions",
+  data: {
+    objectId: "ID",
+    roleId: "String",
+    subjectUserGroupId: "ID",
+    permissionName: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "create",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: update-givenpermission
+
+_Route Definition_ : This route is used by admin to update a permission assignment to a role/user/usergroup for objects or general use.
+
+_Route Type_ : update
+
+_Default access route_ : _PATCH_ `/givenpermissions/:givenPermissionId`
+
+#### Parameters
+
+The update-givenpermission api has got 7 parameters
+
+| Parameter          | Type    | Required | Population                        |
+| ------------------ | ------- | -------- | --------------------------------- |
+| permissionName     | String  | false    | request.body?.permissionName      |
+| roleId             | String  | false    | request.body?.roleId              |
+| subjectUserId      | String  | false    | request.body?.subjectUserId       |
+| subjectUserGroupId | String  | false    | request.body?.subjectUserGroupId  |
+| objectId           | String  | false    | request.body?.objectId            |
+| canDo              | Boolean | false    | request.body?.canDo               |
+| givenPermissionId  | ID      | true     | request.params?.givenPermissionId |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **PATCH /givenpermissions/:givenPermissionId**
+
+```js
+axios({
+  method: "PATCH",
+  url: `/givenpermissions/${givenPermissionId}`,
+  data: {
+    permissionName: "String",
+    roleId: "String",
+    subjectUserId: "String",
+    subjectUserGroupId: "String",
+    objectId: "String",
+    canDo: "Boolean",
+  },
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "update",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: delete-givenpermission
+
+_Route Definition_ : This route is used by admin to delete a permission assignment to a role/user/usergroup for objects or general use.
+
+_Route Type_ : delete
+
+_Default access route_ : _DELETE_ `/givenpermissions/:givenPermissionId`
+
+#### Parameters
+
+The delete-givenpermission api has got 1 parameter
+
+| Parameter         | Type | Required | Population                        |
+| ----------------- | ---- | -------- | --------------------------------- |
+| givenPermissionId | ID   | true     | request.params?.givenPermissionId |
+
+To access the route the session should validated across these validations.
+
+```js
+/* 
+Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
+This validation will be executed on layer1
+*/
+if (
+  !(
+    this.userHasRole(this.ROLES.superAdmin) ||
+    this.userHasRole(this.ROLES.admin) ||
+    this.userHasRole(this.ROLES.saasAdmin) ||
+    this.userHasRole(this.ROLES.tenantAdmin)
+  )
+) {
+  throw new BadRequestError(
+    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
+  );
+}
+```
+
+To access the api you can use the **REST** controller with the path **DELETE /givenpermissions/:givenPermissionId**
+
+```js
+axios({
+  method: "DELETE",
+  url: `/givenpermissions/${givenPermissionId}`,
+  data: {},
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "delete",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": false }
+}
+```
+
+### Route: retrive-givenpermission
+
+_Route Definition_ : This route is used by admin roles or the users to get the permission assignment information.
+
+_Route Type_ : get
+
+_Default access route_ : _GET_ `/givenpermissions/:givenPermissionId`
+
+#### Parameters
+
+The retrive-givenpermission api has got 1 parameter
+
+| Parameter         | Type | Required | Population                        |
+| ----------------- | ---- | -------- | --------------------------------- |
+| givenPermissionId | ID   | true     | request.params?.givenPermissionId |
+
+To access the api you can use the **REST** controller with the path **GET /givenpermissions/:givenPermissionId**
+
+```js
+axios({
+  method: "GET",
+  url: `/givenpermissions/${givenPermissionId}`,
+  data: {},
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermission",
+  "action": "get",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermission": { "id": "ID", "isActive": true }
+}
+```
+
+### Route: list-givenpermissions
+
+_Route Definition_ : This route is used by admin or user roles to get the list of permission assignments.
+
+_Route Type_ : getList
+
+_Default access route_ : _GET_ `/givenpermissions`
+
+The list-givenpermissions api has got no parameters.
+
+To access the api you can use the **REST** controller with the path **GET /givenpermissions**
+
+```js
+axios({
+  method: "GET",
+  url: "/givenpermissions",
+  data: {},
+  params: {},
+});
+```
+
+The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
+
+Following JSON represents the most comprehensive form of the **`givenPermissions`** object in the respones. However, some properties may be omitted based on the object's internal logic.
+
+```json
+{
+  "status": "OK",
+  "statusCode": "200",
+  "elapsedMs": 126,
+  "ssoTime": 120,
+  "source": "db",
+  "cacheKey": "hexCode",
+  "userId": "ID",
+  "sessionId": "ID",
+  "requestId": "ID",
+  "dataName": "givenPermissions",
+  "action": "getList",
+  "appVersion": "Version",
+  "rowCount": 1,
+  "givenPermissions": { "id": "ID", "isActive": true }
 }
 ```
 
