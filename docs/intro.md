@@ -1,9 +1,5 @@
----
-sidebar_position: 1
----
-  
-# Intro
-  
+#Intro
+
 Here you can find 3 services documents.
 
 Each service has 4 documents which are 

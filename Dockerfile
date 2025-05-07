@@ -1,17 +1,20 @@
+# Use Node.js as base image
+FROM node:20-alpine
 
-  FROM node:20.5 AS builder
-  
-  WORKDIR /app
-  
-  COPY ./package.json ./
-  RUN npm cache clean –force
-  RUN npm install 
-  
-  COPY . .
-  
-  RUN npm run  build
-  
-  FROM nginx:alpine-slim
-  COPY --from=builder /app/build /usr/share/nginx/html
-  COPY nginx.conf /etc/nginx/conf.d/default.conf
-    
+# Set working directory
+WORKDIR /app
+
+# Install serve globally
+RUN npm install -g serve
+
+# Copy all files
+COPY . .
+
+# Build documentation
+RUN npx mindbricks-docs-face -b
+
+# Expose port for serving
+EXPOSE 3000
+
+# Serve the documentation
+CMD ["serve", ".mindbricks", "-p", "3000"]
