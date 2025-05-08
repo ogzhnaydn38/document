@@ -26,7 +26,13 @@ module.exports = {
       "sm": 2,
       "lg": 3
     },
-    "items": []
+    "items": [
+      {
+        "title": "Auth Service",
+        "description": "Auth service documents",
+        "icon": "fas fa-tools"
+      }
+    ]
   },
   "sidebar": [
     {
@@ -35,6 +41,19 @@ module.exports = {
         {
           "title": "Intro",
           "url": "/intro"
+        }
+      ]
+    },
+    {
+      "title": "Auth Service",
+      "items": [
+        {
+          "title": "EVENT GUIDE",
+          "url": "/auth-service/event-guide"
+        },
+        {
+          "title": "REST API GUIDE",
+          "url": "/auth-service/rest-api-guide"
         }
       ]
     }
