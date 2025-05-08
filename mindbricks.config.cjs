@@ -26,7 +26,23 @@ module.exports = {
       "sm": 2,
       "lg": 3
     },
-    "items": []
+    "items": [
+      {
+        "title": "Test1 Service",
+        "description": "Test1 service documents",
+        "icon": "fas fa-tools"
+      },
+      {
+        "title": "Test2 Service",
+        "description": "Test2 service documents",
+        "icon": "fas fa-tools"
+      },
+      {
+        "title": "Auth Service",
+        "description": "Auth service documents",
+        "icon": "fas fa-tools"
+      }
+    ]
   },
   "sidebar": [
     {
@@ -35,6 +51,31 @@ module.exports = {
         {
           "title": "Intro",
           "url": "/intro"
+        }
+      ]
+    },
+    {
+      "title": "Test1 Service",
+      "items": []
+    },
+    {
+      "title": "Test2 Service",
+      "items": []
+    },
+    {
+      "title": "Auth Service",
+      "items": [
+        {
+          "title": "_CATEGORY_",
+          "url": "/auth-service/_category_"
+        },
+        {
+          "title": "EVENT GUIDE",
+          "url": "/auth-service/event-guide"
+        },
+        {
+          "title": "REST API GUIDE",
+          "url": "/auth-service/rest-api-guide"
         }
       ]
     }

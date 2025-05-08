@@ -1,11 +1,4 @@
----
-id: event-guide
-title:  EVENT GUIDE
-sidebar_label:  EVENT GUIDE
-sidebar_position: 1
----
 # EVENT GUIDE
-
 ## tickatme-auth-service
 
 Authentication service for the project
@@ -14,7 +7,7 @@ Authentication service for the project
 
 The architectural design of this microservice is credited to . For inquiries, feedback, or further information regarding the architecture, please direct your communication to:
 
-Email:
+Email: 
 
 We encourage open communication and welcome any questions or discussions related to the architectural aspects of this microservice.
 
@@ -32,13 +25,13 @@ This section provides detailed instructions on monitoring service events, coveri
 
 # Authentication and Authorization
 
-Access to the `Auth` service's events is facilitated through the project's Kafka server, which is not accessible to the public. Subscription to a Kafka topic requires being on the same network and possessing valid Kafka user credentials. This document presupposes that readers have existing access to the Kafka server.
+Access to the `Auth` service's events is facilitated through the project's Kafka server, which is not accessible to the public. Subscription to a Kafka topic requires being on the same network and possessing valid Kafka user credentials.  This document presupposes that readers have existing access to the Kafka server.
 
 Additionally, the service offers a public subscription option via REST for real-time data management in frontend applications, secured through REST API authentication and authorization mechanisms. To subscribe to service events via the REST API, please consult the Realtime REST API Guide.
 
 # Database Events
 
-Database events are triggered at the database layer, automatically and atomically, in response to any modifications at the data level. These events serve to notify subscribers about the creation, update, or deletion of objects within the database, distinct from any overarching business logic.
+Database events are triggered at the database layer, automatically and atomically, in response to any modifications at the data level. These events serve to notify subscribers about the creation, update, or deletion of objects within the database, distinct from any overarching business logic. 
 
 Listening to database events is particularly beneficial for those focused on tracking changes at the database level. A typical use case for subscribing to database events is to replicate the data store of one service within another service's scope, ensuring data consistency and syncronization across services.
 
@@ -52,185 +45,71 @@ Such detailed eventing provides a robust foundation for building responsive, dat
 
 This event is triggered upon the creation of a `user` data object in the database. The event payload encompasses the newly created data, encapsulated within the root of the paylod.
 
-**Event payload**:
-
+**Event payload**: 
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "email": "String",
-  "password": "String",
-  "fullname": "String",
-  "avatar": "String",
-  "roleId": "String",
-  "emailVerified": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
+{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 ## DbEvent user-updated
 
 **Event topic**: `tickatme-auth-service-dbevent-user-updated`
 
 Activation of this event follows the update of a `user` data object. The payload contains the updated information under the `user` attribute, along with the original data prior to update, labeled as `old_user`.
 
-**Event payload**:
-
+**Event payload**: 
 ```json
 {
-  "old_user": {
-    "id": "ID",
-    "_owner": "ID",
-    "email": "String",
-    "password": "String",
-    "fullname": "String",
-    "avatar": "String",
-    "roleId": "String",
-    "emailVerified": "Boolean",
-    "isActive": true,
-    "recordVersion": "Integer",
-    "createdAt": "Date",
-    "updatedAt": "Date"
-  },
-  "user": {
-    "id": "ID",
-    "_owner": "ID",
-    "email": "String",
-    "password": "String",
-    "fullname": "String",
-    "avatar": "String",
-    "roleId": "String",
-    "emailVerified": "Boolean",
-    "isActive": true,
-    "recordVersion": "Integer",
-    "createdAt": "Date",
-    "updatedAt": "Date"
-  }
+old_user:{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"},
+user:{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"},
 }
-```
-
+``` 
 ## DbEvent user-deleted
 
 **Event topic**: `tickatme-auth-service-dbevent-user-deleted`
 
 This event announces the deletion of a `user` data object, covering both hard deletions (permanent removal) and soft deletions (where the `isActive` attribute is set to false). Regardless of the deletion type, the event payload will present the data as it was immediately before deletion, highlighting an `isActive` status of false for soft deletions.
 
-**Event payload**:
-
+**Event payload**: 
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "email": "String",
-  "password": "String",
-  "fullname": "String",
-  "avatar": "String",
-  "roleId": "String",
-  "emailVerified": "Boolean",
-  "isActive": false,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
+{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":false,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 ## DbEvent givenPermission-created
 
 **Event topic**: `tickatme-auth-service-dbevent-givenpermission-created`
 
 This event is triggered upon the creation of a `givenPermission` data object in the database. The event payload encompasses the newly created data, encapsulated within the root of the paylod.
 
-**Event payload**:
-
+**Event payload**: 
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "permissionName": "String",
-  "roleId": "String",
-  "subjectUserId": "String",
-  "subjectUserGroupId": "String",
-  "objectId": "String",
-  "canDo": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
+{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 ## DbEvent givenPermission-updated
 
 **Event topic**: `tickatme-auth-service-dbevent-givenpermission-updated`
 
 Activation of this event follows the update of a `givenPermission` data object. The payload contains the updated information under the `givenPermission` attribute, along with the original data prior to update, labeled as `old_givenPermission`.
 
-**Event payload**:
-
+**Event payload**: 
 ```json
 {
-  "old_givenPermission": {
-    "id": "ID",
-    "_owner": "ID",
-    "permissionName": "String",
-    "roleId": "String",
-    "subjectUserId": "String",
-    "subjectUserGroupId": "String",
-    "objectId": "String",
-    "canDo": "Boolean",
-    "isActive": true,
-    "recordVersion": "Integer",
-    "createdAt": "Date",
-    "updatedAt": "Date"
-  },
-  "givenPermission": {
-    "id": "ID",
-    "_owner": "ID",
-    "permissionName": "String",
-    "roleId": "String",
-    "subjectUserId": "String",
-    "subjectUserGroupId": "String",
-    "objectId": "String",
-    "canDo": "Boolean",
-    "isActive": true,
-    "recordVersion": "Integer",
-    "createdAt": "Date",
-    "updatedAt": "Date"
-  }
+old_givenPermission:{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"},
+givenPermission:{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"},
 }
-```
-
+``` 
 ## DbEvent givenPermission-deleted
 
 **Event topic**: `tickatme-auth-service-dbevent-givenpermission-deleted`
 
 This event announces the deletion of a `givenPermission` data object, covering both hard deletions (permanent removal) and soft deletions (where the `isActive` attribute is set to false). Regardless of the deletion type, the event payload will present the data as it was immediately before deletion, highlighting an `isActive` status of false for soft deletions.
 
-**Event payload**:
-
+**Event payload**: 
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "permissionName": "String",
-  "roleId": "String",
-  "subjectUserId": "String",
-  "subjectUserGroupId": "String",
-  "objectId": "String",
-  "canDo": "Boolean",
-  "isActive": false,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":false,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
+
 
 # ElasticSearch Index Events
 
-Within the `Auth` service, most data objects are mirrored in ElasticSearch indices, ensuring these indices remain syncronized with their database counterparts through creation, updates, and deletions. These indices serve dual purposes: they act as a data source for external services and furnish aggregated data tailored to enhance frontend user experiences. Consequently, an ElasticSearch index might encapsulate data in its original form or aggregate additional information from other data objects.
+Within the `Auth` service, most data objects are mirrored in ElasticSearch indices, ensuring these indices remain syncronized with their database counterparts through creation, updates, and deletions. These indices serve dual purposes: they act as a data source for external services and furnish aggregated data tailored to enhance frontend user experiences. Consequently, an ElasticSearch index might encapsulate data in its original form or aggregate additional information from other data objects. 
 
 These aggregations can include both one-to-one and one-to-many relationships not only with database objects within the same service but also across different services. This capability allows developers to access comprehensive, aggregated data efficiently. By subscribing to ElasticSearch index events, developers are notified when an index is updated and can directly obtain the aggregated entity within the event payload, bypassing the need for separate ElasticSearch queries.
 
@@ -238,81 +117,40 @@ It's noteworthy that some services may augment another service's index by append
 
 This approach to indexing and event handling facilitates a modular, interconnected architecture where services can seamlessly integrate and react to changes, enriching the overall data ecosystem and enabling more dynamic, responsive applications.
 
+
+
 ## Index Event user-created
 
 **Event topic**: `elastic-index-tickatme_user-created`
 
 **Event payload**:
-
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "email": "String",
-  "password": "String",
-  "fullname": "String",
-  "avatar": "String",
-  "roleId": "String",
-  "emailVerified": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 
 ## Index Event user-updated
 
 **Event topic**: `elastic-index-tickatme_user-created`
 
 **Event payload**:
-
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "email": "String",
-  "password": "String",
-  "fullname": "String",
-  "avatar": "String",
-  "roleId": "String",
-  "emailVerified": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 
 ## Index Event user-deleted
 
 **Event topic**: `elastic-index-tickatme_user-deleted`
 
 **Event payload**:
-
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "email": "String",
-  "password": "String",
-  "fullname": "String",
-  "avatar": "String",
-  "roleId": "String",
-  "emailVerified": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","email":"String","password":"String","fullname":"String","avatar":"String","roleId":"String","emailVerified":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 
 ## Index Event user-extended
 
 **Event topic**: `elastic-index-tickatme_user-extended`
 
 **Event payload**:
-
 ```js
 {
   id: id,
@@ -321,7 +159,7 @@ This approach to indexing and event handling facilitates a modular, interconnect
     [extendName + "_count"]: "Number",
   },
 }
-```
+``` 
 
 # Route Events
 
@@ -337,597 +175,269 @@ The payload of a route event mirrors the REST response JSON of the route, provid
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"create","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event user-updated
 
 **Event topic** : `tickatme-auth-service-user-updated`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"update","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event userrole-updated
 
 **Event topic** : `tickatme-auth-service-userrole-updated`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"update","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event user-retrived
 
 **Event topic** : `tickatme-auth-service-user-retrived`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "get",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"get","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event users-listed
 
 **Event topic** : `tickatme-auth-service-users-listed`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `users` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `users` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`users`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "users",
-  "action": "getList",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "users": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"users","action":"getList","appVersion":"Version","rowCount":1,"users":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermission-created
 
 **Event topic** : `tickatme-auth-service-givenpermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event rolepermission-created
 
 **Event topic** : `tickatme-auth-service-rolepermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event userpermission-created
 
 **Event topic** : `tickatme-auth-service-userpermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event grouppermission-created
 
 **Event topic** : `tickatme-auth-service-grouppermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event rolegrouppermission-created
 
 **Event topic** : `tickatme-auth-service-rolegrouppermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectpermission-created
 
 **Event topic** : `tickatme-auth-service-objectpermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectgrouppermission-created
 
 **Event topic** : `tickatme-auth-service-objectgrouppermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectrolepermission-created
 
 **Event topic** : `tickatme-auth-service-objectrolepermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectgrouprolepermission-created
 
 **Event topic** : `tickatme-auth-service-objectgrouprolepermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermission-updated
 
 **Event topic** : `tickatme-auth-service-givenpermission-updated`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"update","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermission-deleted
 
 **Event topic** : `tickatme-auth-service-givenpermission-deleted`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "delete",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": false }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"delete","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":false}}
+```  
 ## Route Event givenpermission-retrived
 
 **Event topic** : `tickatme-auth-service-givenpermission-retrived`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "get",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"get","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermissions-listed
 
 **Event topic** : `tickatme-auth-service-givenpermissions-listed`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermissions` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermissions` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermissions`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermissions",
-  "action": "getList",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermissions": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermissions","action":"getList","appVersion":"Version","rowCount":1,"givenPermissions":{"id":"ID","isActive":true}}
+```  
+
+
 
 ## Index Event givenpermission-created
 
 **Event topic**: `elastic-index-tickatme_givenpermission-created`
 
 **Event payload**:
-
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "permissionName": "String",
-  "roleId": "String",
-  "subjectUserId": "String",
-  "subjectUserGroupId": "String",
-  "objectId": "String",
-  "canDo": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 
 ## Index Event givenpermission-updated
 
 **Event topic**: `elastic-index-tickatme_givenpermission-created`
 
 **Event payload**:
-
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "permissionName": "String",
-  "roleId": "String",
-  "subjectUserId": "String",
-  "subjectUserGroupId": "String",
-  "objectId": "String",
-  "canDo": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 
 ## Index Event givenpermission-deleted
 
 **Event topic**: `elastic-index-tickatme_givenpermission-deleted`
 
 **Event payload**:
-
 ```json
-{
-  "id": "ID",
-  "_owner": "ID",
-  "permissionName": "String",
-  "roleId": "String",
-  "subjectUserId": "String",
-  "subjectUserGroupId": "String",
-  "objectId": "String",
-  "canDo": "Boolean",
-  "isActive": true,
-  "recordVersion": "Integer",
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
+{"id":"ID","_owner":"ID","permissionName":"String","roleId":"String","subjectUserId":"String","subjectUserGroupId":"String","objectId":"String","canDo":"Boolean","isActive":true,"recordVersion":"Integer","createdAt":"Date","updatedAt":"Date"}
+```  
 
 ## Index Event givenpermission-extended
 
 **Event topic**: `elastic-index-tickatme_givenpermission-extended`
 
 **Event payload**:
-
 ```js
 {
   id: id,
@@ -936,7 +446,7 @@ The following JSON included in the payload illustrates the fullest representatio
     [extendName + "_count"]: "Number",
   },
 }
-```
+``` 
 
 # Route Events
 
@@ -952,528 +462,242 @@ The payload of a route event mirrors the REST response JSON of the route, provid
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"create","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event user-updated
 
 **Event topic** : `tickatme-auth-service-user-updated`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"update","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event userrole-updated
 
 **Event topic** : `tickatme-auth-service-userrole-updated`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"update","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event user-retrived
 
 **Event topic** : `tickatme-auth-service-user-retrived`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `user` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`user`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "get",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"get","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
 ## Route Event users-listed
 
 **Event topic** : `tickatme-auth-service-users-listed`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `users` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `users` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`users`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "users",
-  "action": "getList",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "users": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"users","action":"getList","appVersion":"Version","rowCount":1,"users":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermission-created
 
 **Event topic** : `tickatme-auth-service-givenpermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event rolepermission-created
 
 **Event topic** : `tickatme-auth-service-rolepermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event userpermission-created
 
 **Event topic** : `tickatme-auth-service-userpermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event grouppermission-created
 
 **Event topic** : `tickatme-auth-service-grouppermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event rolegrouppermission-created
 
 **Event topic** : `tickatme-auth-service-rolegrouppermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectpermission-created
 
 **Event topic** : `tickatme-auth-service-objectpermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectgrouppermission-created
 
 **Event topic** : `tickatme-auth-service-objectgrouppermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectrolepermission-created
 
 **Event topic** : `tickatme-auth-service-objectrolepermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event objectgrouprolepermission-created
 
 **Event topic** : `tickatme-auth-service-objectgrouprolepermission-created`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermission-updated
 
 **Event topic** : `tickatme-auth-service-givenpermission-updated`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"update","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermission-deleted
 
 **Event topic** : `tickatme-auth-service-givenpermission-deleted`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "delete",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": false }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"delete","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":false}}
+```  
 ## Route Event givenpermission-retrived
 
 **Event topic** : `tickatme-auth-service-givenpermission-retrived`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermission` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermission`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "get",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
-
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"get","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
 ## Route Event givenpermissions-listed
 
 **Event topic** : `tickatme-auth-service-givenpermissions-listed`
 
 **Event payload**:
 
-The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermissions` data object itself.
+The event payload, mirroring the REST API response, is structured as an encapsulated JSON. It includes metadata related to the API as well as the `givenPermissions` data object itself. 
 
 The following JSON included in the payload illustrates the fullest representation of the **`givenPermissions`** object. Note, however, that certain properties might be excluded in accordance with the object's inherent logic.
 
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermissions",
-  "action": "getList",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermissions": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermissions","action":"getList","appVersion":"Version","rowCount":1,"givenPermissions":{"id":"ID","isActive":true}}
+```  
+
+
+
 
 # Copyright
-
 All sources, documents and other digital materials are copyright of .
 
 # About Us
-
 For more information please visit our website: .
 
 .

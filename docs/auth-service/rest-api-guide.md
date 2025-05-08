@@ -1,21 +1,16 @@
----
-id: rest-api-guide
-title:  REST API GUIDE
-sidebar_label:  REST API GUIDE
-sidebar_position: 1
----
-# REST API GUIDE
+ 
 
+# REST API GUIDE 
 ## tickatme-auth-service
 
 Authentication service for the project
 
 ## Architectural Design Credit and Contact Information
 
-The architectural design of this microservice is credited to .
+The architectural design of this microservice is credited to . 
 For inquiries, feedback, or further information regarding the architecture, please direct your communication to:
 
-Email:
+Email: 
 
 We encourage open communication and welcome any questions or discussions related to the architectural aspects of this microservice.
 
@@ -38,27 +33,27 @@ It's important to note that the Auth Service also supports alternative methods o
 
 To ensure secure access to the Auth service's protected endpoints, a project-wide access token is required. This token serves as the primary method for authenticating requests to our service. However, it's important to note that access control varies across different routes:
 
-**Protected Routes**:
+**Protected Routes**: 
 Certain routes require specific authorization levels. Access to these routes is contingent upon the possession of a valid access token that meets the route-specific authorization criteria. Unauthorized requests to these routes will be rejected.
 
-**Public Routes**:
+**Public Routes**: 
 The service also includes routes that are accessible without authentication. These public endpoints are designed for open access and do not require an access token.
 
 ### Token Locations
-
 When including your access token in a request, ensure it is placed in one of the following specified locations. The service will sequentially search these locations for the token, utilizing the first one it encounters.
 
-| Location             | Token Name / Param Name |
-| -------------------- | ----------------------- |
-| Query                | access_token            |
-| Authorization Header | Bearer                  |
-| Header               | tickatme-access-token   |
-| Cookie               | tickatme-access-token   |
+| Location               | Token Name / Param Name      |
+| ---------------------- | ---------------------------- |
+| Query                  | access_token                 |
+| Authorization Header   | Bearer                       |
+| Header                 | tickatme-access-token|
+| Cookie                 | tickatme-access-token|
+
 
 Please ensure the token is correctly placed in one of these locations, using the appropriate label as indicated. The service prioritizes these locations in the order listed, processing the first token it successfully identifies.
 
-## Api Definitions
 
+## Api Definitions
 This section outlines the API endpoints available within the Auth service. Each endpoint can receive parameters through various methods, meticulously described in the following definitions. It's important to understand the flexibility in how parameters can be included in requests to effectively interact with the Auth service.
 
 **Parameter Inclusion Methods:**
@@ -99,6 +94,7 @@ The `Auth` service's routes support several common parameters designed to modify
 
 By utilizing these common parameters, you can tailor the behavior of API requests to suit your specific requirements, ensuring optimal performance and usability of the `Auth` service.
 
+
 ### Error Response
 
 If a request encounters an issue, whether due to a logical fault or a technical problem, the service responds with a standardized JSON error structure. The HTTP status code within this response indicates the nature of the error, utilizing commonly recognized codes for clarity:
@@ -119,7 +115,7 @@ Each error response is structured to provide meaningful insight into the problem
   "date": "2024-03-19T12:13:54.124Z",
   "detail": "String"
 }
-```
+``` 
 
 ### Object Structure of a Successfull Response
 
@@ -128,7 +124,6 @@ When the `Auth` service processes requests successfully, it wraps the requested 
 **Key Characteristics of the Response Envelope:**
 
 - **Data Presentation**: Depending on the nature of the request, the service returns either a single data object or an array of objects encapsulated within the JSON envelope.
-
   - **Creation and Update Routes**: These routes return the unmodified (pure) form of the data object(s), without any associations to other data objects.
   - **Delete Routes**: Even though the data is removed from the database, the last known state of the data object(s) is returned in its pure form.
   - **Get Requests**: A single data object is returned in JSON format.
@@ -159,7 +154,7 @@ For successful operations, the response includes a `"status": "OK"` property, si
 ```json
 {
   "status":"OK",
-  "statusCode": 200,
+  "statusCode": 200,   
   "elapsedMs":126,
   "ssoTime":120,
   "source": "db",
@@ -174,8 +169,8 @@ For successful operations, the response includes a `"status": "OK"` property, si
   "rowCount":3
   "products":[{},{},{}],
   "paging": {
-    "pageNumber":1,
-    "pageRowCount":25,
+    "pageNumber":1, 
+    "pageRowCount":25, 
     "totalRowCount":3,
     "pageCount":1
   },
@@ -202,2298 +197,2147 @@ Route Validations may be executed in 4 different layers. The layer is a kind of 
 
 `layer4`: "The last layer of route life cycle which is just after afterInstance supplementary data is collected. In this layer the afterInstance data is accessable with the main operation result, beforeInstance data and route parameters."
 
-## Resources
-
+## Resources 
 Auth service provides the following resources which are stored in its own database as a data object. Note that a resource for an api access is a data object for the service.
 
 ### User resource
 
-_Resource Definition_ : A data object that stores the user information and handles login settings.
-_User Resource Properties_
-| Name | Type | Required | Default | Definition |
+*Resource Definition* : A data object that stores the user information and handles login settings.
+*User Resource Properties* 
+| Name | Type | Required | Default | Definition | 
 | ---- | ---- | -------- | ------- | ---------- |
-| **email** | String | | | _ A string value to represent the user&#39;s email._ |
-| **password** | String | | | _ A string value to represent the user&#39;s password as hashed._ |
-| **fullname** | String | | | _A string value to represent the fullname of the user_ |
-| **avatar** | String | | | _The avatar icon of the user._ |
-| **roleId** | String | | | _The roleId of the user._ |
-| **emailVerified** | Boolean | | | _A boolean value to represent the email verification status of the user._ |
-
+| **email** | String |  |  | * A string value to represent the user&#39;s email.* |
+| **password** | String |  |  | * A string value to represent the user&#39;s password as hashed.* |
+| **fullname** | String |  |  | *A string value to represent the fullname of the user* |
+| **avatar** | String |  |  | *The avatar icon of the user.* |
+| **roleId** | String |  |  | *The roleId of the user.* |
+| **emailVerified** | Boolean |  |  | *A boolean value to represent the email verification status of the user.* |
 ### GivenPermission resource
 
-_Resource Definition_ : A data object that stores the assigment of a specific named permission to a role, usergroup or user for a specific object or for general use.
-_GivenPermission Resource Properties_
-| Name | Type | Required | Default | Definition |
+*Resource Definition* : A data object that stores the assigment of a specific named permission to a role, usergroup or user for a specific object or for general use.
+*GivenPermission Resource Properties* 
+| Name | Type | Required | Default | Definition | 
 | ---- | ---- | -------- | ------- | ---------- |
-| **permissionName** | String | | | * A string value to refrence the named permission. It can either reference as groupName.permissionName or permissionName or groupName.** |
-| **roleId\*\* | String | | | *A string value to represent the role name to which the permission is given.* |
-| **subjectUserId** | String | | | *A string value to represent the user ID to whom the permission is given.* |
-| **subjectUserGroupId** | String | | | *A string value to represent the user group ID to which the permission is given.* |
-| **objectId** | String | | | *A string value to represent the object ID for which the permission is given.* |
-| **canDo** | Boolean | | | *A boolean value to represent if the permission is active or not. A specific negative value can override a more general positive value or vice verse.\* |
-
+| **permissionName** | String |  |  | * A string value to refrence the named permission. It can either reference as groupName.permissionName or permissionName or groupName.** |
+| **roleId** | String |  |  | *A string value to represent the role name to which the permission is given.* |
+| **subjectUserId** | String |  |  | *A string value to represent the user ID to whom the permission is given.* |
+| **subjectUserGroupId** | String |  |  | *A string value to represent the user group ID to which the permission is given.* |
+| **objectId** | String |  |  | *A string value to represent the object ID for which the permission is given.* |
+| **canDo** | Boolean |  |  | *A boolean value to represent if the permission is active or not. A specific negative value can override a more general positive value or vice verse.* |
 ## Crud Routes
-
 ### Route: register-user
+*Route Definition* : This route is used by public users to register themselves
 
-_Route Definition_ : This route is used by public users to register themselves
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/users`
 
-_Default access route_ : _POST_ `/users`
+####  Parameters
+The register-user api has got 4 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| email  | String  |  | request.body?.email |
+| password  | String  |  | request.body?.password |
+| fullname  | String  |  | request.body?.fullname |
+| avatar  | String  |  | request.body?.avatar |
 
-The register-user api has got 4 parameters
+  
 
-| Parameter | Type   | Required | Population             |
-| --------- | ------ | -------- | ---------------------- |
-| email     | String |          | request.body?.email    |
-| password  | String |          | request.body?.password |
-| fullname  | String |          | request.body?.fullname |
-| avatar    | String |          | request.body?.avatar   |
+  
 
-To access the api you can use the **REST** controller with the path **POST /users**
 
+
+To access the api you can use the **REST** controller with the path **POST  /users**
 ```js
-axios({
-  method: "POST",
-  url: "/users",
-  data: {
-    email: "String",
-    password: "String",
-    fullname: "String",
-    avatar: "String",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/users',
+    data: {
+            email:"String",  
+            password:"String",  
+            fullname:"String",  
+            avatar:"String",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`user`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"create","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: update-user
+*Route Definition* : This route is used by users to update their profiles.
 
-_Route Definition_ : This route is used by users to update their profiles.
+*Route Type* : update
 
-_Route Type_ : update
+*Default access route* : *PATCH* `/users/:userId`
 
-_Default access route_ : _PATCH_ `/users/:userId`
+####  Parameters
+The update-user api has got 4 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| password  | String  | false | request.body?.password |
+| fullname  | String  | false | request.body?.fullname |
+| avatar  | String  | false | request.body?.avatar |
+| userId  | ID  | true | request.params?.userId |
 
-The update-user api has got 4 parameters
+  
 
-| Parameter | Type   | Required | Population             |
-| --------- | ------ | -------- | ---------------------- |
-| password  | String | false    | request.body?.password |
-| fullname  | String | false    | request.body?.fullname |
-| avatar    | String | false    | request.body?.avatar   |
-| userId    | ID     | true     | request.params?.userId |
+  
 
-To access the api you can use the **REST** controller with the path **PATCH /users/:userId**
 
+
+To access the api you can use the **REST** controller with the path **PATCH  /users/:userId**
 ```js
-axios({
-  method: "PATCH",
-  url: `/users/${userId}`,
-  data: {
-    password: "String",
-    fullname: "String",
-    avatar: "String",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'PATCH',
+    url: `/users/${userId}`,
+    data: {
+            password:"String",  
+            fullname:"String",  
+            avatar:"String",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`user`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"update","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: update-userrole
+*Route Definition* : This route is used by admin roles to update the user role.The default role is user when a user is registered. A user&#39;s role can be updated by superAdmin or admin
 
-_Route Definition_ : This route is used by admin roles to update the user role.The default role is user when a user is registered. A user&#39;s role can be updated by superAdmin or admin
+*Route Type* : update
 
-_Route Type_ : update
+*Default access route* : *PATCH* `/userroles/:userId`
 
-_Default access route_ : _PATCH_ `/userroles/:userId`
+####  Parameters
+The update-userrole api has got 2 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| roleId  | String  | true | request.body?.roleId |
+| userId  | ID  | true | request.params?.userId |
 
-The update-userrole api has got 2 parameters
+  
 
-| Parameter | Type   | Required | Population             |
-| --------- | ------ | -------- | ---------------------- |
-| roleId    | String | true     | request.body?.roleId   |
-| userId    | ID     | true     | request.params?.userId |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **PATCH /userroles/:userId**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **PATCH  /userroles/:userId**
 ```js
-axios({
-  method: "PATCH",
-  url: `/userroles/${userId}`,
-  data: {
-    roleId: "String",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'PATCH',
+    url: `/userroles/${userId}`,
+    data: {
+            roleId:"String",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`user`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"update","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: retrive-user
+*Route Definition* : This route is used by admin roles or the users themselves to get the user profile information.
 
-_Route Definition_ : This route is used by admin roles or the users themselves to get the user profile information.
+*Route Type* : get
 
-_Route Type_ : get
+*Default access route* : *GET* `/users/:userId`
 
-_Default access route_ : _GET_ `/users/:userId`
+####  Parameters
+The retrive-user api has got 1 parameter  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| userId  | ID  | true | request.params?.userId |
 
-The retrive-user api has got 1 parameter
+  
 
-| Parameter | Type | Required | Population             |
-| --------- | ---- | -------- | ---------------------- |
-| userId    | ID   | true     | request.params?.userId |
+  
 
-To access the api you can use the **REST** controller with the path **GET /users/:userId**
 
+
+To access the api you can use the **REST** controller with the path **GET  /users/:userId**
 ```js
-axios({
-  method: "GET",
-  url: `/users/${userId}`,
-  data: {},
-  params: {},
-});
-```
-
+  axios({
+    method: 'GET',
+    url: `/users/${userId}`,
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`user`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "user",
-  "action": "get",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "user": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"user","action":"get","appVersion":"Version","rowCount":1,"user":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: list-users
+*Route Definition* : The list of users is filtered by the tenantId.
 
-_Route Definition_ : The list of users is filtered by the tenantId.
+*Route Type* : getList
 
-_Route Type_ : getList
+*Default access route* : *GET* `/users`
 
-_Default access route_ : _GET_ `/users`
+The list-users api has got no parameters.    
 
-The list-users api has got no parameters.
+  
 
-To access the api you can use the **REST** controller with the path **GET /users**
+  
 
+
+
+To access the api you can use the **REST** controller with the path **GET  /users**
 ```js
-axios({
-  method: "GET",
-  url: "/users",
-  data: {},
-  params: {},
-});
-```
-
+  axios({
+    method: 'GET',
+    url: '/users',
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`users`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "users",
-  "action": "getList",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "users": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"users","action":"getList","appVersion":"Version","rowCount":1,"users":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-givenpermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a role/user/usergroup for objects or general use.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a role/user/usergroup for objects or general use.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/givenpermissions`
 
-_Default access route_ : _POST_ `/givenpermissions`
+####  Parameters
+The create-givenpermission api has got 6 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| permissionName  | String  |  | request.body?.permissionName |
+| roleId  | String  |  | request.body?.roleId |
+| subjectUserId  | String  |  | request.body?.subjectUserId |
+| subjectUserGroupId  | String  |  | request.body?.subjectUserGroupId |
+| objectId  | String  |  | request.body?.objectId |
+| canDo  | Boolean  |  | request.body?.canDo |
 
-The create-givenpermission api has got 6 parameters
+  
 
-| Parameter          | Type    | Required | Population                       |
-| ------------------ | ------- | -------- | -------------------------------- |
-| permissionName     | String  |          | request.body?.permissionName     |
-| roleId             | String  |          | request.body?.roleId             |
-| subjectUserId      | String  |          | request.body?.subjectUserId      |
-| subjectUserGroupId | String  |          | request.body?.subjectUserGroupId |
-| objectId           | String  |          | request.body?.objectId           |
-| canDo              | Boolean |          | request.body?.canDo              |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /givenpermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /givenpermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/givenpermissions",
-  data: {
-    permissionName: "String",
-    roleId: "String",
-    subjectUserId: "String",
-    subjectUserGroupId: "String",
-    objectId: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/givenpermissions',
+    data: {
+            permissionName:"String",  
+            roleId:"String",  
+            subjectUserId:"String",  
+            subjectUserGroupId:"String",  
+            objectId:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-rolepermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a role.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a role.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/rolepermissions`
 
-_Default access route_ : _POST_ `/rolepermissions`
+####  Parameters
+The create-rolepermission api has got 3 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| roleId  | String  | true | request.body?.roleId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-rolepermission api has got 3 parameters
+  
 
-| Parameter      | Type    | Required | Population                   |
-| -------------- | ------- | -------- | ---------------------------- |
-| roleId         | String  | true     | request.body?.roleId         |
-| permissionName | String  | true     | request.body?.permissionName |
-| canDo          | Boolean | true     | request.body?.canDo          |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /rolepermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /rolepermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/rolepermissions",
-  data: {
-    roleId: "String",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/rolepermissions',
+    data: {
+            roleId:"String",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-userpermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a user.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a user.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/userpermissions`
 
-_Default access route_ : _POST_ `/userpermissions`
+####  Parameters
+The create-userpermission api has got 3 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| subjectUserId  | ID  | true | request.body?.subjectUserId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-userpermission api has got 3 parameters
+  
 
-| Parameter      | Type    | Required | Population                   |
-| -------------- | ------- | -------- | ---------------------------- |
-| subjectUserId  | ID      | true     | request.body?.subjectUserId  |
-| permissionName | String  | true     | request.body?.permissionName |
-| canDo          | Boolean | true     | request.body?.canDo          |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /userpermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /userpermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/userpermissions",
-  data: {
-    subjectUserId: "ID",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/userpermissions',
+    data: {
+            subjectUserId:"ID",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-grouppermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a user group.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a user group.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/grouppermissions`
 
-_Default access route_ : _POST_ `/grouppermissions`
+####  Parameters
+The create-grouppermission api has got 3 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| subjectUserGroupId  | ID  | true | request.body?.subjectUserGroupId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-grouppermission api has got 3 parameters
+  
 
-| Parameter          | Type    | Required | Population                       |
-| ------------------ | ------- | -------- | -------------------------------- |
-| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
-| permissionName     | String  | true     | request.body?.permissionName     |
-| canDo              | Boolean | true     | request.body?.canDo              |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /grouppermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /grouppermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/grouppermissions",
-  data: {
-    subjectUserGroupId: "ID",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/grouppermissions',
+    data: {
+            subjectUserGroupId:"ID",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-rolegrouppermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a role and user group. The permission is given to the users of the group who has the role.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a role and user group. The permission is given to the users of the group who has the role.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/rolegrouppermissions`
 
-_Default access route_ : _POST_ `/rolegrouppermissions`
+####  Parameters
+The create-rolegrouppermission api has got 4 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| roleId  | String  | true | request.body?.roleId |
+| subjectUserGroupId  | ID  | true | request.body?.subjectUserGroupId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-rolegrouppermission api has got 4 parameters
+  
 
-| Parameter          | Type    | Required | Population                       |
-| ------------------ | ------- | -------- | -------------------------------- |
-| roleId             | String  | true     | request.body?.roleId             |
-| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
-| permissionName     | String  | true     | request.body?.permissionName     |
-| canDo              | Boolean | true     | request.body?.canDo              |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /rolegrouppermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /rolegrouppermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/rolegrouppermissions",
-  data: {
-    roleId: "String",
-    subjectUserGroupId: "ID",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/rolegrouppermissions',
+    data: {
+            roleId:"String",  
+            subjectUserGroupId:"ID",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-objectpermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a user for an object.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a user for an object.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/objectpermissions`
 
-_Default access route_ : _POST_ `/objectpermissions`
+####  Parameters
+The create-objectpermission api has got 4 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| objectId  | ID  | true | request.body?.objectId |
+| subjectUserId  | ID  | true | request.body?.subjectUserId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-objectpermission api has got 4 parameters
+  
 
-| Parameter      | Type    | Required | Population                   |
-| -------------- | ------- | -------- | ---------------------------- |
-| objectId       | ID      | true     | request.body?.objectId       |
-| subjectUserId  | ID      | true     | request.body?.subjectUserId  |
-| permissionName | String  | true     | request.body?.permissionName |
-| canDo          | Boolean | true     | request.body?.canDo          |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /objectpermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /objectpermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/objectpermissions",
-  data: {
-    objectId: "ID",
-    subjectUserId: "ID",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/objectpermissions',
+    data: {
+            objectId:"ID",  
+            subjectUserId:"ID",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-objectgrouppermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a user group for an object.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a user group for an object.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/objectgrouppermissions`
 
-_Default access route_ : _POST_ `/objectgrouppermissions`
+####  Parameters
+The create-objectgrouppermission api has got 4 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| objectId  | ID  | true | request.body?.objectId |
+| subjectUserGroupId  | ID  | true | request.body?.subjectUserGroupId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-objectgrouppermission api has got 4 parameters
+  
 
-| Parameter          | Type    | Required | Population                       |
-| ------------------ | ------- | -------- | -------------------------------- |
-| objectId           | ID      | true     | request.body?.objectId           |
-| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
-| permissionName     | String  | true     | request.body?.permissionName     |
-| canDo              | Boolean | true     | request.body?.canDo              |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /objectgrouppermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /objectgrouppermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/objectgrouppermissions",
-  data: {
-    objectId: "ID",
-    subjectUserGroupId: "ID",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/objectgrouppermissions',
+    data: {
+            objectId:"ID",  
+            subjectUserGroupId:"ID",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-objectrolepermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a role for an object.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a role for an object.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/objectrolepermissions`
 
-_Default access route_ : _POST_ `/objectrolepermissions`
+####  Parameters
+The create-objectrolepermission api has got 4 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| objectId  | ID  | true | request.body?.objectId |
+| roleId  | String  | true | request.body?.roleId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-objectrolepermission api has got 4 parameters
+  
 
-| Parameter      | Type    | Required | Population                   |
-| -------------- | ------- | -------- | ---------------------------- |
-| objectId       | ID      | true     | request.body?.objectId       |
-| roleId         | String  | true     | request.body?.roleId         |
-| permissionName | String  | true     | request.body?.permissionName |
-| canDo          | Boolean | true     | request.body?.canDo          |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /objectrolepermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /objectrolepermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/objectrolepermissions",
-  data: {
-    objectId: "ID",
-    roleId: "String",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/objectrolepermissions',
+    data: {
+            objectId:"ID",  
+            roleId:"String",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: create-objectgrouprolepermission
+*Route Definition* : This route is used by admin to create a new permission assignment to a role and user group for an object. The permission to acess(or not) the object is given to the users of the group who has the role.
 
-_Route Definition_ : This route is used by admin to create a new permission assignment to a role and user group for an object. The permission to acess(or not) the object is given to the users of the group who has the role.
+*Route Type* : create
 
-_Route Type_ : create
+*Default access route* : *POST* `/objectgrouprolepermissions`
 
-_Default access route_ : _POST_ `/objectgrouprolepermissions`
+####  Parameters
+The create-objectgrouprolepermission api has got 5 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| objectId  | ID  | true | request.body?.objectId |
+| roleId  | String  | true | request.body?.roleId |
+| subjectUserGroupId  | ID  | true | request.body?.subjectUserGroupId |
+| permissionName  | String  | true | request.body?.permissionName |
+| canDo  | Boolean  | true | request.body?.canDo |
 
-The create-objectgrouprolepermission api has got 5 parameters
+  
 
-| Parameter          | Type    | Required | Population                       |
-| ------------------ | ------- | -------- | -------------------------------- |
-| objectId           | ID      | true     | request.body?.objectId           |
-| roleId             | String  | true     | request.body?.roleId             |
-| subjectUserGroupId | ID      | true     | request.body?.subjectUserGroupId |
-| permissionName     | String  | true     | request.body?.permissionName     |
-| canDo              | Boolean | true     | request.body?.canDo              |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **POST /objectgrouprolepermissions**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **POST  /objectgrouprolepermissions**
 ```js
-axios({
-  method: "POST",
-  url: "/objectgrouprolepermissions",
-  data: {
-    objectId: "ID",
-    roleId: "String",
-    subjectUserGroupId: "ID",
-    permissionName: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'POST',
+    url: '/objectgrouprolepermissions',
+    data: {
+            objectId:"ID",  
+            roleId:"String",  
+            subjectUserGroupId:"ID",  
+            permissionName:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "create",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"create","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: update-givenpermission
+*Route Definition* : This route is used by admin to update a permission assignment to a role/user/usergroup for objects or general use.
 
-_Route Definition_ : This route is used by admin to update a permission assignment to a role/user/usergroup for objects or general use.
+*Route Type* : update
 
-_Route Type_ : update
+*Default access route* : *PATCH* `/givenpermissions/:givenPermissionId`
 
-_Default access route_ : _PATCH_ `/givenpermissions/:givenPermissionId`
+####  Parameters
+The update-givenpermission api has got 7 parameters  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| permissionName  | String  | false | request.body?.permissionName |
+| roleId  | String  | false | request.body?.roleId |
+| subjectUserId  | String  | false | request.body?.subjectUserId |
+| subjectUserGroupId  | String  | false | request.body?.subjectUserGroupId |
+| objectId  | String  | false | request.body?.objectId |
+| canDo  | Boolean  | false | request.body?.canDo |
+| givenPermissionId  | ID  | true | request.params?.givenPermissionId |
 
-The update-givenpermission api has got 7 parameters
+  
 
-| Parameter          | Type    | Required | Population                        |
-| ------------------ | ------- | -------- | --------------------------------- |
-| permissionName     | String  | false    | request.body?.permissionName      |
-| roleId             | String  | false    | request.body?.roleId              |
-| subjectUserId      | String  | false    | request.body?.subjectUserId       |
-| subjectUserGroupId | String  | false    | request.body?.subjectUserGroupId  |
-| objectId           | String  | false    | request.body?.objectId            |
-| canDo              | Boolean | false    | request.body?.canDo               |
-| givenPermissionId  | ID      | true     | request.params?.givenPermissionId |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **PATCH /givenpermissions/:givenPermissionId**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **PATCH  /givenpermissions/:givenPermissionId**
 ```js
-axios({
-  method: "PATCH",
-  url: `/givenpermissions/${givenPermissionId}`,
-  data: {
-    permissionName: "String",
-    roleId: "String",
-    subjectUserId: "String",
-    subjectUserGroupId: "String",
-    objectId: "String",
-    canDo: "Boolean",
-  },
-  params: {},
-});
-```
-
+  axios({
+    method: 'PATCH',
+    url: `/givenpermissions/${givenPermissionId}`,
+    data: {
+            permissionName:"String",  
+            roleId:"String",  
+            subjectUserId:"String",  
+            subjectUserGroupId:"String",  
+            objectId:"String",  
+            canDo:"Boolean",  
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "update",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"update","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: delete-givenpermission
+*Route Definition* : This route is used by admin to delete a permission assignment to a role/user/usergroup for objects or general use.
 
-_Route Definition_ : This route is used by admin to delete a permission assignment to a role/user/usergroup for objects or general use.
+*Route Type* : delete
 
-_Route Type_ : delete
+*Default access route* : *DELETE* `/givenpermissions/:givenPermissionId`
 
-_Default access route_ : _DELETE_ `/givenpermissions/:givenPermissionId`
+####  Parameters
+The delete-givenpermission api has got 1 parameter  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| givenPermissionId  | ID  | true | request.params?.givenPermissionId |
 
-The delete-givenpermission api has got 1 parameter
+  
 
-| Parameter         | Type | Required | Population                        |
-| ----------------- | ---- | -------- | --------------------------------- |
-| givenPermissionId | ID   | true     | request.params?.givenPermissionId |
+  
 
 To access the route the session should validated across these validations.
+
+
+
+
 
 ```js
 /* 
 Validation Check: Check if the logged in user has [superAdmin-admin-saasAdmin-tenantAdmin] roles
 This validation will be executed on layer1
 */
-if (
-  !(
-    this.userHasRole(this.ROLES.superAdmin) ||
-    this.userHasRole(this.ROLES.admin) ||
-    this.userHasRole(this.ROLES.saasAdmin) ||
-    this.userHasRole(this.ROLES.tenantAdmin)
-  )
-) {
-  throw new BadRequestError(
-    "errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute",
-  );
-}
-```
+  if (!(this.userHasRole(this.ROLES.superAdmin) || this.userHasRole(this.ROLES.admin) || this.userHasRole(this.ROLES.saasAdmin) || this.userHasRole(this.ROLES.tenantAdmin))) {
+  throw (new BadRequestError("errMsg_userShoudlHave[superAdmin-admin-saasAdmin-tenantAdmin]RoleToAccessRoute"))
+};
 
-To access the api you can use the **REST** controller with the path **DELETE /givenpermissions/:givenPermissionId**
+``` 
 
+
+
+To access the api you can use the **REST** controller with the path **DELETE  /givenpermissions/:givenPermissionId**
 ```js
-axios({
-  method: "DELETE",
-  url: `/givenpermissions/${givenPermissionId}`,
-  data: {},
-  params: {},
-});
-```
-
+  axios({
+    method: 'DELETE',
+    url: `/givenpermissions/${givenPermissionId}`,
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "delete",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": false }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"delete","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":false}}
+```  
+
+
+  
 
 ### Route: retrive-givenpermission
+*Route Definition* : This route is used by admin roles or the users to get the permission assignment information.
 
-_Route Definition_ : This route is used by admin roles or the users to get the permission assignment information.
+*Route Type* : get
 
-_Route Type_ : get
+*Default access route* : *GET* `/givenpermissions/:givenPermissionId`
 
-_Default access route_ : _GET_ `/givenpermissions/:givenPermissionId`
+####  Parameters
+The retrive-givenpermission api has got 1 parameter  
 
-#### Parameters
+| Parameter              | Type                   | Required | Population                   |
+| ---------------------- | ---------------------- | -------- | ---------------------------- |
+| givenPermissionId  | ID  | true | request.params?.givenPermissionId |
 
-The retrive-givenpermission api has got 1 parameter
+  
 
-| Parameter         | Type | Required | Population                        |
-| ----------------- | ---- | -------- | --------------------------------- |
-| givenPermissionId | ID   | true     | request.params?.givenPermissionId |
+  
 
-To access the api you can use the **REST** controller with the path **GET /givenpermissions/:givenPermissionId**
 
+
+To access the api you can use the **REST** controller with the path **GET  /givenpermissions/:givenPermissionId**
 ```js
-axios({
-  method: "GET",
-  url: `/givenpermissions/${givenPermissionId}`,
-  data: {},
-  params: {},
-});
-```
-
+  axios({
+    method: 'GET',
+    url: `/givenpermissions/${givenPermissionId}`,
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermission`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermission",
-  "action": "get",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermission": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermission","action":"get","appVersion":"Version","rowCount":1,"givenPermission":{"id":"ID","isActive":true}}
+```  
+
+
+  
 
 ### Route: list-givenpermissions
+*Route Definition* : This route is used by admin or user roles to get the list of permission assignments.
 
-_Route Definition_ : This route is used by admin or user roles to get the list of permission assignments.
+*Route Type* : getList
 
-_Route Type_ : getList
+*Default access route* : *GET* `/givenpermissions`
 
-_Default access route_ : _GET_ `/givenpermissions`
+The list-givenpermissions api has got no parameters.    
 
-The list-givenpermissions api has got no parameters.
+  
 
-To access the api you can use the **REST** controller with the path **GET /givenpermissions**
+  
 
+
+
+To access the api you can use the **REST** controller with the path **GET  /givenpermissions**
 ```js
-axios({
-  method: "GET",
-  url: "/givenpermissions",
-  data: {},
-  params: {},
-});
-```
-
+  axios({
+    method: 'GET',
+    url: '/givenpermissions',
+    data: {
+    
+    },
+    params: {
+    
+    }
+  });
+```     
 The API response is encapsulated within a JSON envelope. Successful operations return an HTTP status code of 200 for get, getlist, update, or delete requests, and 201 for create requests. Each successful response includes a `"status": "OK"` property. For error handling, refer to the "Error Response" section.
 
 Following JSON represents the most comprehensive form of the **`givenPermissions`** object in the respones. However, some properties may be omitted based on the object's internal logic.
 
+
+
 ```json
-{
-  "status": "OK",
-  "statusCode": "200",
-  "elapsedMs": 126,
-  "ssoTime": 120,
-  "source": "db",
-  "cacheKey": "hexCode",
-  "userId": "ID",
-  "sessionId": "ID",
-  "requestId": "ID",
-  "dataName": "givenPermissions",
-  "action": "getList",
-  "appVersion": "Version",
-  "rowCount": 1,
-  "givenPermissions": { "id": "ID", "isActive": true }
-}
-```
+{"status":"OK","statusCode":"200","elapsedMs":126,"ssoTime":120,"source":"db","cacheKey":"hexCode","userId":"ID","sessionId":"ID","requestId":"ID","dataName":"givenPermissions","action":"getList","appVersion":"Version","rowCount":1,"givenPermissions":{"id":"ID","isActive":true}}
+```  
+
+
+  
+
+
 
 ### Authentication Specific Routes
 
-### Route: login
 
-_Route Definition_: Handles the login process by verifying user credentials and generating an authenticated session.
+  ### Route: login
 
-_Route Type_: login
-
-_Access Routes_:
-
-- `GET /login`: Returns the HTML login page
+  *Route Definition*: Handles the login process by verifying user credentials and generating an authenticated session.
+  
+  *Route Type*: login
+  
+  *Access Routes*:
+  - `GET /login`: Returns the HTML login page
   (not a frontend module, typically used in browser-based contexts for test purpose to make sending POST /login easier).
-- `POST /login`: Accepts credentials, verifies the user, creates a session, and returns a JWT access token.
-
-#### Parameters
-
-| Parameter | Type   | Required | Population              |
-| --------- | ------ | -------- | ----------------------- |
-| username  | String | Yes      | `request.body.username` |
-| password  | String | Yes      | `request.body.password` |
-
-#### Notes
-
-- This route accepts login credentials and creates an authenticated session if credentials are valid.
-- On success, the response will:
-  - Set a cookie named `projectname-access-token[-tenantCodename]` with the JWT token.
-  - Include the token in the response headers under the same name.
-  - Return the full `session` object in the JSON body.
-
-```js
-// Sample POST /login call
-axios.post("/login", {
-  username: "user@example.com",
-  password: "securePassword",
-});
-```
-
-**Success Response**
-
-Returns the authenticated session object with a status code `200 OK`.
-
-A secure HTTP-only cookie and an access token header are included in the response.
-
-```jsom
-{
-  "userId": "d92b9d4c-9b1e-4e95-842e-3fb9c8c1df38",
-  "email": "user@example.com",
-  "fullname": "John Doe",
-  ...
-}
-```
-
-**Error Responses**
-
-- **401 Unauthorized:** Invalid username or password.
-- **403 Forbidden:** Login attempt rejected due to pending email/mobile verification or 2FA requirements.
-- **400 Bad Request:** Missing credentials in the request.
-
-### Route: logout
-
-_Route Definition_: Logs the user out by terminating the current session and clearing the access token.
-
-_Route Type_: logout
-
-_Access Route_: `POST /logout`
-
-#### Parameters
-
-This route does not require any parameters in the body or query.
-
-#### Behavior
-
-- Invalidates the current session on the server (if stored).
-- Clears the access token cookie (`projectname-access-token[-tenantCodename]`) from the client.
-- Responds with a 200 status and a simple confirmation object.
-
-```js
-// Sample POST /logout call
-axios.post(
-  "/logout",
-  {},
+  - `POST /login`: Accepts credentials, verifies the user, creates a session, and returns a JWT access token.
+  
+  #### Parameters
+  
+  | Parameter   | Type     | Required | Population                  |
+  |-------------|----------|----------|-----------------------------|
+  | username    | String   | Yes      | `request.body.username`     |
+  | password    | String   | Yes      | `request.body.password`     |
+  
+  #### Notes
+  
+  - This route accepts login credentials and creates an authenticated session if credentials are valid.
+  - On success, the response will:
+    - Set a cookie named `projectname-access-token[-tenantCodename]` with the JWT token.
+    - Include the token in the response headers under the same name.
+    - Return the full `session` object in the JSON body.
+  
+  ```js
+  // Sample POST /login call
+  axios.post("/login", {
+    username: "user@example.com",
+    password: "securePassword"
+  });
+  ```
+  
+  **Success Response**
+  
+  Returns the authenticated session object with a status code `200 OK`.
+  
+  A secure HTTP-only cookie and an access token header are included in the response.
+  
+  ```jsom
   {
+    "userId": "d92b9d4c-9b1e-4e95-842e-3fb9c8c1df38",
+    "email": "user@example.com",
+    "fullname": "John Doe",
+    ...
+  }
+  ```
+  
+  **Error Responses**
+  * **401 Unauthorized:** Invalid username or password.
+  * **403 Forbidden:** Login attempt rejected due to pending email/mobile verification or 2FA requirements.
+  * **400 Bad Request:** Missing credentials in the request.
+  
+  ### Route: logout
+  
+  *Route Definition*: Logs the user out by terminating the current session and clearing the access token.
+  
+  *Route Type*: logout
+  
+  *Access Route*: `POST /logout`
+  
+  #### Parameters
+  
+  This route does not require any parameters in the body or query.
+  
+  #### Behavior
+  
+  - Invalidates the current session on the server (if stored).
+  - Clears the access token cookie (`projectname-access-token[-tenantCodename]`) from the client.
+  - Responds with a 200 status and a simple confirmation object.
+  
+  ```js
+  // Sample POST /logout call
+  axios.post("/logout", {}, {
     headers: {
-      Authorization: "Bearer your-jwt-token",
-    },
-  },
-);
-```
-
-**Notes**
-
-- This route is public, meaning it can be called without a session or token.
-- If the session is active, the server will clear associated session state and cookies.
-- The logout behavior may vary slightly depending on whether you're using cookie-based or header-based token management.
-
-**Error Responses**
-00200 OK:\*\* Always returned, regardless of whether a session existed.
-Logout is treated as idempotent.
-
-### Route: publickey
-
-_Route Definition_: Returns the public RSA key used to verify JWT access tokens issued by the auth service.
-
-_Route Type_: publicKeyFetch
-
-_Access Route_: `GET /publickey`
-
-#### Parameters
-
-| Parameter | Type   | Required | Population            |
-| --------- | ------ | -------- | --------------------- |
-| keyId     | String | No       | `request.query.keyId` |
-
-- `keyId` is optional.  
-  If provided, retrieves the public key corresponding to the specific `keyId`.  
-  If omitted, retrieves the current active public key (`global.currentKeyId`).
-
-#### Behavior
-
-- Reads the requested RSA public key file from the server filesystem.
-- If the key exists, returns it along with its `keyId`.
-- If the key does not exist, returns a 404 error.
-
-```js
-// Sample GET /publickey call
-axios.get("/publickey", {
-  params: {
-    keyId: "currentKeyIdOptional",
-  },
-});
-```
-
-**Success Response**
-Returns the active public key and its associated keyId.
-
-```json
-{
-  "keyId": "a1b2c3d4",
-  "keyData": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhki...\n-----END PUBLIC KEY-----"
-}
-```
-
-**Error Responses**
-**404 Not Found:** Public key file could not be found on the server.
-
-### Token Key Management
-
-Mindbricks uses RSA key pairs to sign and verify JWT access tokens securely.  
- While the auth service signs each token with a private key, other services within the system — or external clients — need the corresponding **public key** to verify the authenticity and integrity of received tokens.
-
-The `/publickey` endpoint allows services and clients to dynamically fetch the currently active public key, ensuring that token verification remains secure even if key rotation is performed.
-
-> **Note**:  
-> The `/publickey` route is not intended for direct frontend (browser) consumption.  
-> Instead, it is primarily used by trusted backend services, APIs, or middleware systems that need to independently verify access tokens issued by the auth service — without making verification-dependent API calls to the auth service itself.
-
-Accessing the public key is crucial for validating user sessions efficiently and maintaining a decentralized trust model across your platform.
-
-### Route: linksession
-
-_Route Definition_: Allows manually linking an access token to a browser session by setting it as an HTTP-only cookie.
-
-_Route Type_: devUtility
-
-_Access Route_: `GET /linksession?token=ACCESS_TOKEN`
-
-#### Parameters
-
-| Parameter | Type   | Required | Description                                       |
-| --------- | ------ | -------- | ------------------------------------------------- |
-| token     | String | Yes      | A valid access token (JWT) to link to the session |
-
-#### Behavior
-
-- Accepts a valid access token (`token`) via query string.
-- Writes the token to a secure HTTP-only cookie on the response.
-- Enables the browser to use this token automatically for subsequent API requests (like `/currentuser` or any protected route).
-- Returns basic info confirming the operation.
-
-```js
-// Sample usage (e.g., in dev/test environment)
-axios.get("/linksession?token=your-access-token");
-```
-
-**Success Response**
-
-```json
-{
-  "cookieName": "myapp-access-token",
-  "accessToken": "your-access-token",
-  "domain": "your-api-domain.com",
-  "currentuser": "https://your-api-domain.com/currentuser"
-}
-```
-
-**Error Responses**
-
-- **401 Unauthorized**: Malformed request or internal error.
-
-```json
-{
-  "status": "ERR",
-  "message": "Invalid or missing token"
-}
-```
-
-**Notes**
-
-- Use case: This route is designed primarily for test and development purposes.
-- It enables developers to paste or pass a token into the browser and simulate an authenticated session using cookie-based access.
-- After calling /linksession, you can immediately query /currentuser or any secured endpoint from the same browser session.
-
-> ⚠️ This route is disabled in production environments, as it provides manual token injection via query parameters.
-
-### Route: relogin
-
-_Route Definition_: Performs a silent login by verifying the current access token, refreshing the session, and returning a new access token along with updated user information.
-
-_Route Type_: sessionRefresh
-
-_Access Route_: `GET /relogin`
-
-#### Parameters
-
-This route does **not** require any request parameters.
-
-#### Behavior
-
-- Validates the access token associated with the request.
-- If the token is valid:
-  - Re-authenticates the user using the session's user ID.
-  - Fetches the most up-to-date user information from the database.
-  - Generates a new session object with a **new session ID** and **new access token**.
-- If the token is invalid or missing, returns a 401 Unauthorized error.
-
-```js
-// Example call to refresh session
-axios.get("/relogin", {
-  headers: {
-    Authorization: "Bearer your-jwt-token",
-  },
-});
-```
-
-**Success Response**
-Returns a new session object, refreshed from database data.
-
-```json
-{
-  "sessionId": "new-session-uuid",
-  "userId": "user-uuid",
-  "email": "user@example.com",
-  "roleId": "admin",
-  "accessToken": "new-jwt-token",
-  ...
-}
-```
-
-**Error Responses**
-
-- **401 Unauthorized**: Token is missing, invalid, or session cannot be re-established.
-
-```json
-{
-  "status": "ERR",
-  "message": "Cannot relogin"
-}
-```
-
-**Notes**
-
-- The `/relogin` route is commonly used for **silent login flows**, especially after page reloads or token-based auto-login mechanisms.
-- It triggers internal logic (`req.userAuthUpdate = true`) to signal that the session should be re-initialized and repopulated.
-- It is not a simple session lookup — it performs a fresh authentication pass using the session's user context.
-- The refreshed session ensures any updates to user profile, roles, or permissions are immediately reflected.
-
-> **Tip:**
-> This route is ideal when you want to **rebuild a user's session** in the frontend without requiring them to manually log in again.
-
-## Verification Services — Email Verification
-
-Email verification is a two-step flow that ensures a user's email address is verified and trusted by the system.
-
-All verification services, including email verification, are located under the `/verification-services` base path.
-
-### When is Email Verification Triggered?
-
-- After user registration, if `emailVerificationRequiredForLogin` is active.
-- During a separate user action to verify or update email addresses.
-- When login fails with `EmailVerificationNeeded` and frontend initiates verification.
-
-### Email Verification Flow
-
-1. **Frontend calls `/verification-services/email-verification/start`** with the user's email address.
-   - Mindbricks checks if the email is already verified.
-   - A secret code is generated and stored in the cache linked to the user.
-   - The code is sent to the user's email or returned in the response (only in development environments for easier testing).
-2. **User receives the code and enters it into the frontend application.**
-3. **Frontend calls `/verification-services/email-verification/complete`** with the `userId` and the received `secretCode`.
-   - Mindbricks checks that the code is valid, not expired, and matches.
-   - If valid, the user’s `emailVerified` flag is set to `true`, and a success response is returned.
-
----
-
-## API Endpoints
-
-### POST `/verification-services/email-verification/start`
-
-**Purpose**  
- Starts the email verification process by generating and sending a secret verification code.
-
-#### Request Body
-
-| Parameter | Type   | Required | Description                 |
-| --------- | ------ | -------- | --------------------------- |
-| email     | String | Yes      | The email address to verify |
-
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-#### Success Response
-
-Secret code details (in development environment). Confirms that the verification step has been started.
-
-```json
-{
-  "userId": "user-uuid",
-  "email": "user@example.com",
-  "secretCode": "123456",
-  "expireTime": 86400,
-  "date": "2024-04-29T10:00:00.000Z"
-}
-```
-
-> ⚠️ In production, the secret code is only sent via email, not exposed in the API response.
-
-#### Error Responses
-
-- `400 Bad Request`: Email already verified.
-- `403 Forbidden`: Sending a code too frequently (anti-spam).
-
----
-
-### POST `/verification-services/email-verification/complete`
-
-**Purpose**  
- Completes the email verification by validating the secret code.
-
-#### Request Body
-
-| Parameter  | Type   | Required | Description                                 |
-| ---------- | ------ | -------- | ------------------------------------------- |
-| userId     | String | Yes      | The user's ID whose email is being verified |
-| secretCode | String | Yes      | The secret code received via email          |
-
-```json
-{
-  "userId": "user-uuid",
-  "secretCode": "123456"
-}
-```
-
-#### Success Response
-
-Returns confirmation that the email has been verified.
-
-```json
-{
-  "userId": "user-uuid",
-  "email": "user@example.com",
-  "isVerified": true
-}
-```
-
-#### Error Responses
-
-- `403 Forbidden`:
-  - Secret code mismatch
-  - Secret code expired
+      "Authorization": "Bearer your-jwt-token"
+    }
+  });
+  ```
+  
+  **Notes**
+  * This route is public, meaning it can be called without a session or token.
+  * If the session is active, the server will clear associated session state and cookies.
+  * The logout behavior may vary slightly depending on whether you're using cookie-based or header-based token management.
+  
+  **Error Responses**
+  00200 OK:** Always returned, regardless of whether a session existed.
+  Logout is treated as idempotent.
+  
+  ### Route: publickey
+  
+  *Route Definition*: Returns the public RSA key used to verify JWT access tokens issued by the auth service.
+  
+  *Route Type*: publicKeyFetch
+  
+  *Access Route*: `GET /publickey`
+  
+  #### Parameters
+  
+  | Parameter | Type   | Required | Population         |
+  |-----------|--------|----------|--------------------|
+  | keyId     | String | No       | `request.query.keyId` |
+  
+  - `keyId` is optional.  
+    If provided, retrieves the public key corresponding to the specific `keyId`.  
+    If omitted, retrieves the current active public key (`global.currentKeyId`).
+  
+  #### Behavior
+  
+  - Reads the requested RSA public key file from the server filesystem.
+  - If the key exists, returns it along with its `keyId`.
+  - If the key does not exist, returns a 404 error.
+  
+  ```js
+  // Sample GET /publickey call
+  axios.get("/publickey", {
+    params: {
+      keyId: "currentKeyIdOptional"
+    }
+  });
+  ```
+  
+  **Success Response**
+  Returns the active public key and its associated keyId.
+  ```json
+  {
+      "keyId": "a1b2c3d4",
+      "keyData": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhki...\n-----END PUBLIC KEY-----"
+  }
+  ````
+  **Error Responses**
+  **404 Not Found:** Public key file could not be found on the server.
+  
+  ### Token Key Management
+  
+  Mindbricks uses RSA key pairs to sign and verify JWT access tokens securely.  
+  While the auth service signs each token with a private key, other services within the system — or external clients — need the corresponding **public key** to verify the authenticity and integrity of received tokens.
+  
+  The `/publickey` endpoint allows services and clients to dynamically fetch the currently active public key, ensuring that token verification remains secure even if key rotation is performed.
+  
+  > **Note**:  
+  > The `/publickey` route is not intended for direct frontend (browser) consumption.  
+  > Instead, it is primarily used by trusted backend services, APIs, or middleware systems that need to independently verify access tokens issued by the auth service — without making verification-dependent API calls to the auth service itself.
+  
+  Accessing the public key is crucial for validating user sessions efficiently and maintaining a decentralized trust model across your platform.
+  
+  ### Route: linksession
+  
+  *Route Definition*: Allows manually linking an access token to a browser session by setting it as an HTTP-only cookie.
+  
+  *Route Type*: devUtility
+  
+  *Access Route*: `GET /linksession?token=ACCESS_TOKEN`
+  
+  #### Parameters
+  
+  | Parameter | Type   | Required | Description                          |
+  |-----------|--------|----------|--------------------------------------|
+  | token     | String | Yes      | A valid access token (JWT) to link to the session |
+  
+  #### Behavior
+  
+  - Accepts a valid access token (`token`) via query string.
+  - Writes the token to a secure HTTP-only cookie on the response.
+  - Enables the browser to use this token automatically for subsequent API requests (like `/currentuser` or any protected route).
+  - Returns basic info confirming the operation.
+  
+  ```js
+  // Sample usage (e.g., in dev/test environment)
+  axios.get("/linksession?token=your-access-token");
+  ```
+  **Success Response**
+  
+  ```json
+  {
+    "cookieName": "myapp-access-token",
+    "accessToken": "your-access-token",
+    "domain": "your-api-domain.com",
+    "currentuser": "https://your-api-domain.com/currentuser"
+  }
+  
+  ```
+  
+  **Error Responses**
+  * **401 Unauthorized**: Malformed request or internal error.
+  
+  ```json
+  {
+    "status": "ERR",
+    "message": "Invalid or missing token"
+  }
+  ```
+  
+  **Notes**
+  
+  - Use case: This route is designed primarily for test and development purposes.
+  - It enables developers to paste or pass a token into the browser and simulate an authenticated session using cookie-based access.
+  - After calling /linksession, you can immediately query /currentuser or any secured endpoint from the same browser session.
+  
+  > ⚠️ This route is disabled in production environments, as it provides manual token injection via query parameters.
+  
+  ### Route: relogin
+  
+  *Route Definition*: Performs a silent login by verifying the current access token, refreshing the session, and returning a new access token along with updated user information.
+  
+  *Route Type*: sessionRefresh
+  
+  *Access Route*: `GET /relogin`
+  
+  #### Parameters
+  
+  This route does **not** require any request parameters.
+  
+  #### Behavior
+  
+  - Validates the access token associated with the request.
+  - If the token is valid:
+    - Re-authenticates the user using the session's user ID.
+    - Fetches the most up-to-date user information from the database.
+    - Generates a new session object with a **new session ID** and **new access token**.
+  - If the token is invalid or missing, returns a 401 Unauthorized error.
+  
+  ```js
+  // Example call to refresh session
+  axios.get("/relogin", {
+    headers: {
+      "Authorization": "Bearer your-jwt-token"
+    }
+  });
+  ```
+  **Success Response**
+  Returns a new session object, refreshed from database data.
+  ```json
+  {
+    "sessionId": "new-session-uuid",
+    "userId": "user-uuid",
+    "email": "user@example.com",
+    "roleId": "admin",
+    "accessToken": "new-jwt-token",
+    ...
+  }
+  ```
+  **Error Responses**
+  * **401 Unauthorized**: Token is missing, invalid, or session cannot be re-established.
+  ```json
+  {
+    "status": "ERR",
+    "message": "Cannot relogin"
+  }
+  ```
+  
+  **Notes**
+  
+  - The `/relogin` route is commonly used for **silent login flows**, especially after page reloads or token-based auto-login mechanisms.
+  - It triggers internal logic (`req.userAuthUpdate = true`) to signal that the session should be re-initialized and repopulated.
+  - It is not a simple session lookup — it performs a fresh authentication pass using the session's user context.
+  - The refreshed session ensures any updates to user profile, roles, or permissions are immediately reflected.
+  
+  > **Tip:**
+  > This route is ideal when you want to **rebuild a user's session** in the frontend without requiring them to manually log in again.
+  
+  ## Verification Services — Email Verification
+  
+  Email verification is a two-step flow that ensures a user's email address is verified and trusted by the system.
+  
+  All verification services, including email verification, are located under the `/verification-services` base path.
+  
+  ### When is Email Verification Triggered?
+  
+  - After user registration, if `emailVerificationRequiredForLogin` is active.
+  - During a separate user action to verify or update email addresses.
+  - When login fails with `EmailVerificationNeeded` and frontend initiates verification.
+  
+  ### Email Verification Flow
+  
+  1. **Frontend calls `/verification-services/email-verification/start`** with the user's email address.
+     - Mindbricks checks if the email is already verified.
+     - A secret code is generated and stored in the cache linked to the user.
+     - The code is sent to the user's email or returned in the response (only in development environments for easier testing).
+  2. **User receives the code and enters it into the frontend application.**
+  3. **Frontend calls `/verification-services/email-verification/complete`** with the `userId` and the received `secretCode`.
+     - Mindbricks checks that the code is valid, not expired, and matches.
+     - If valid, the user’s `emailVerified` flag is set to `true`, and a success response is returned.
+  
+  ---
+  
+  ## API Endpoints
+  
+  ### POST `/verification-services/email-verification/start`
+  
+  **Purpose**  
+  Starts the email verification process by generating and sending a secret verification code.
+  
+  #### Request Body
+  
+  | Parameter | Type   | Required | Description                 |
+  |-----------|--------|----------|-----------------------------|
+  | email     | String | Yes      | The email address to verify |
+  
+  ```json
+  {
+    "email": "user@example.com"
+  }
+  ```
+  
+  #### Success Response
+  
+  Secret code details (in development environment). Confirms that the verification step has been started.
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "email": "user@example.com",
+    "secretCode": "123456",
+    "expireTime": 86400,
+    "date": "2024-04-29T10:00:00.000Z"
+  }
+  ```
+  
+  > ⚠️ In production, the secret code is only sent via email, not exposed in the API response.
+  
+  #### Error Responses
+  
+  - `400 Bad Request`: Email already verified.
+  - `403 Forbidden`: Sending a code too frequently (anti-spam).
+  
+  ---
+  
+  ### POST `/verification-services/email-verification/complete`
+  
+  **Purpose**  
+  Completes the email verification by validating the secret code.
+  
+  #### Request Body
+  
+  | Parameter   | Type   | Required | Description                         |
+  |-------------|--------|----------|-------------------------------------|
+  | userId      | String | Yes      | The user's ID whose email is being verified |
+  | secretCode  | String | Yes      | The secret code received via email |
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "secretCode": "123456"
+  }
+  ```
+  
+  #### Success Response
+  
+  Returns confirmation that the email has been verified.
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "email": "user@example.com",
+    "isVerified": true
+  }
+  ```
+  
+  #### Error Responses
+  
+  - `403 Forbidden`:
+    - Secret code mismatch
+    - Secret code expired
+    - No ongoing verification found
+  
+  ---
+  
+  ## Important Behavioral Notes
+  
+  ### Resend Throttling  
+  You can only request a new verification code after a cooldown period (`resendTimeWindow`, e.g., 60 seconds).
+  
+  ### Expiration Handling  
+  Verification codes expire after a configured period (`expireTimeWindow`, e.g., 1 day).
+  
+  ### One Code Per Session  
+  Only one active verification session per user is allowed at a time.
+  
+  > 💡 Mindbricks automatically manages spam prevention, session caching, expiration, and event broadcasting (start/complete events) for all verification steps.
+  
+  ## Verification Services — Mobile Verification
+  
+  Mobile verification is a two-step flow that ensures a user's mobile number is verified and trusted by the system.
+  
+  All verification services, including mobile verification, are located under the `/verification-services` base path.
+  
+  ### When is Mobile Verification Triggered?
+  
+  - After user registration, if `mobileVerificationRequiredForLogin` is active.
+  - During a separate user action to verify or update mobile numbers.
+  - When login fails with `MobileVerificationNeeded` and frontend initiates verification.
+  
+  ### Mobile Verification Flow
+  
+  1. **Frontend calls `/verification-services/mobile-verification/start`** with the user's email address (used to locate the user).
+     - Mindbricks checks if the mobile number is already verified.
+     - A secret code is generated and stored in the cache linked to the user.
+     - The code is sent to the user's mobile via SMS or returned in the response (only in development environments for easier testing).
+  2. **User receives the code and enters it into the frontend application.**
+  3. **Frontend calls `/verification-services/mobile-verification/complete`** with the `userId` and the received `secretCode`.
+     - Mindbricks checks that the code is valid, not expired, and matches.
+     - If valid, the user’s `mobileVerified` flag is set to `true`, and a success response is returned.
+  
+  ---
+  
+  ## API Endpoints
+  
+  ### POST `/verification-services/mobile-verification/start`
+  
+  **Purpose**:  
+  Starts the mobile verification process by generating and sending a secret verification code.
+  
+  #### Request Body
+  
+  | Parameter | Type   | Required | Description                         |
+  |-----------|--------|----------|-------------------------------------|
+  | email     | String | Yes      | The email address associated with the mobile number to verify         |
+  
+  ```json
+  {
+    "email": "user@example.com"
+  }
+  ```
+  
+  **Success Response**  
+  Secret code details (in development environment). Confirms that the verification step has been started.
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "mobile": "+15551234567",
+    "secretCode": "123456",
+    "expireTime": 86400,
+    "date": "2024-04-29T10:00:00.000Z"
+  }
+  ```
+  
+  ⚠️ In production, the secret code is only sent via SMS, not exposed in the API response.
+  
+  **Error Responses**  
+  - 400 Bad Request: Mobile already verified.  
+  - 403 Forbidden: Sending a code too frequently (anti-spam).
+  
+  ---
+  
+  ### POST `/verification-services/mobile-verification/complete`
+  
+  **Purpose**:  
+  Completes the mobile verification by validating the secret code.
+  
+  #### Request Body
+  
+  | Parameter   | Type   | Required | Description                        |
+  |-------------|--------|----------|------------------------------------|
+  | userId      | String | Yes      | The user's ID whose mobile is being verified |
+  | secretCode  | String | Yes      | The secret code received via SMS   |
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "secretCode": "123456"
+  }
+  ```
+  
+  **Success Response**  
+  Returns confirmation that the mobile number has been verified.
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "mobile": "+15551234567",
+    "isVerified": true
+  }
+  ```
+  
+  **Error Responses**  
+  403 Forbidden:
+  - Secret code mismatch  
+  - Secret code expired  
   - No ongoing verification found
+  
+  ---
+  
+  ## Important Behavioral Notes
+  
+  **Resend Throttling**:  
+  You can only request a new verification code after a cooldown period (`resendTimeWindow`, e.g., 60 seconds).
+  
+  **Expiration Handling**:  
+  Verification codes expire after a configured period (`expireTimeWindow`, e.g., 1 day).
+  
+  **One Code Per Session**:  
+  Only one active verification session per user is allowed at a time.
+  
+  💡 Mindbricks automatically manages spam prevention, session caching, expiration, and event broadcasting (start/complete events) for all verification steps.
+  
+  ## Verification Services — Email 2FA Verification
+  
+  Email 2FA (Two-Factor Authentication) provides an additional layer of security by requiring users to confirm their identity using a secret code sent to their email address. This process is used in login flows or sensitive actions that need extra verification.
+  
+  All verification services, including 2FA, are located under the `/verification-services` base path.
+  
+  ### When is Email 2FA Triggered?
+  
+  - During login flows where `sessionNeedsEmail2FA` is `true`
+  - When the backend enforces two-factor authentication for a sensitive operation
+  
+  ### Email 2FA Flow
+  
+  1. **Frontend calls `/verification-services/email-2factor-verification/start`** with the user’s email address.
+     - Mindbricks identifies the user and checks if a cooldown period applies.
+     - A new secret code is generated and stored, linked to the current session ID.
+     - The code is sent via email or returned in development environments.
+  2. **User receives the code and enters it into the frontend application.**
+  3. **Frontend calls `/verification-services/email-2factor-verification/complete`** with the `userId`, `sessionId`, and the `secretCode`.
+     - Mindbricks verifies the code, validates the session, and updates the session to remove the 2FA requirement.
+  
+  ---
+  
+  ## API Endpoints
+  
+  ### POST `/verification-services/email-2factor-verification/start`
+  
+  **Purpose**:  
+  Starts the email-based 2FA process by generating and sending a verification code.
+  
+  #### Request Body
+  
+  | Parameter | Type   | Required | Description                         |
+  |-----------|--------|----------|-------------------------------------|
+  | email     | String | Yes      | The email of the user               |
+  
+  ```json
+  {
+    "email": "user@example.com"
+  }
+  ```
+  
+  #### Success Response
+  
+  ```json
+  {
+    "sessionId": "session-uuid",
+    "userId": "user-uuid",
+    "email": "user@example.com",
+    "secretCode": "123456",
+    "expireTime": 300,
+    "date": "2024-04-29T10:00:00.000Z"
+  }
+  ```
+  
+  ⚠️ In production, the `secretCode` is only sent via email, not exposed in the API response.
+  
+  #### Error Responses
+  
+  - **403 Forbidden**: Sending a code too frequently (anti-spam)
+  - **401 Unauthorized**: User session not found
+  
+  ---
+  
+  ### POST `/verification-services/email-2factor-verification/complete`
+  
+  **Purpose**:  
+  Completes the email 2FA process by validating the secret code and session.
+  
+  #### Request Body
+  
+  | Parameter   | Type   | Required | Description                                      |
+  |-------------|--------|----------|--------------------------------------------------|
+  | userId      | String | Yes      | The user’s ID                                    |
+  | sessionId   | String | Yes      | The session ID the code is tied to              |
+  | secretCode  | String | Yes      | The secret code received via email              |
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "sessionId": "session-uuid",
+    "secretCode": "123456"
+  }
+  ```
+  
+  #### Success Response
+  
+  Returns an updated session with 2FA disabled:
+  
+  ```json
+  {
+    "sessionId": "session-uuid",
+    "userId": "user-uuid",
+    "sessionNeedsEmail2FA": false,
+    ...
+  }
+  ```
+  
+  #### Error Responses
+  
+  - **403 Forbidden**:  
+    - Secret code mismatch  
+    - Secret code expired  
+    - Verification step not found  
+  
+  ---
+  
+  ### Important Behavioral Notes
+  
+  - **One Code Per Session**: Only one active code can be issued per session.
+  - **Resend Throttling**: Code requests are throttled based on `resendTimeWindow` (e.g., 60 seconds).
+  - **Expiration**: Codes expire after `expireTimeWindow` (e.g., 5 minutes).
+  - 💡 Mindbricks manages session cache, spam control, expiration tracking, and event notifications for all 2FA steps.
+  
+  ## Verification Services — Mobile 2FA Verification
+  
+  Mobile 2FA (Two-Factor Authentication) is a security mechanism that adds an extra layer of authentication using a user's verified mobile number.
+  
+  All verification services, including mobile 2FA, are accessible under the `/verification-services` base path.
+  
+  ### When is Mobile 2FA Triggered?
+  
+  - During login or critical actions requiring step-up authentication.
+  - When the session has a flag `sessionNeedsMobile2FA = true`.
+  - When login or session verification fails with `MobileVerificationNeeded`, indicating 2FA is required.
+  
+  ### Mobile 2FA Verification Flow
+  
+  1. **Frontend calls `/verification-services/mobile-2factor-verification/start`** with the user's email address, client info, and reason.
+     - Mindbricks finds the user by email.
+     - Verifies that the user has a verified mobile number.
+     - A secret code is generated and cached against the session.
+     - The code is sent to the user's verified mobile number or returned in the response (only in development environments).
+  2. **User receives the code and enters it in the frontend app.**
+  3. **Frontend calls `/verification-services/mobile-2factor-verification/complete`** with the `userId`, `sessionId`, and `secretCode`.
+     - Mindbricks validates the code for expiration and correctness.
+     - If valid, the session flag `sessionNeedsMobile2FA` is cleared.
+     - A refreshed session object is returned.
+  
+  ---
+  
+  ## API Endpoints
+  
+  ### POST `/verification-services/mobile-2factor-verification/start`
+  
+  **Purpose**:  
+  Initiates mobile-based 2FA by generating and sending a secret code.
+  
+  #### Request Body
+  
+  | Parameter | Type   | Required | Description                                   |
+  |-----------|--------|----------|-----------------------------------------------|
+  | email     | String | Yes      | The user's email address                      |
+  | client    | String | No       | Optional client tag or context                |
+  | reason    | String | No       | Optional reason for triggering 2FA            |
+  
+  ```json
+  {
+    "email": "user@example.com",
+    "client": "login-page",
+    "reason": "Login requires mobile 2FA"
+  }
+  ```
+  
+  **Success Response**  
+  Returns the generated code (only in development), expiration info, and metadata.
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "sessionId": "session-uuid",
+    "mobile": "+15551234567",
+    "secretCode": "654321",
+    "expireTime": 300,
+    "date": "2024-04-29T11:00:00.000Z"
+  }
+  ```
+  
+  ⚠️ In production environments, the secret code is not included in the response and is instead delivered via SMS.
+  
+  **Error Responses**
+  
+  - 403 Forbidden: Mobile number not verified.
+  - 403 Forbidden: Code resend attempted before cooldown period (`resendTimeWindow`).
+  - 401 Unauthorized: Email not recognized or session invalid.
+  
+  ---
+  
+  ### POST `/verification-services/mobile-2factor-verification/complete`
+  
+  **Purpose**:  
+  Completes mobile 2FA verification by validating the secret code and updating the session.
+  
+  #### Request Body
+  
+  | Parameter   | Type   | Required | Description                         |
+  |-------------|--------|----------|-------------------------------------|
+  | userId      | String | Yes      | ID of the user                      |
+  | sessionId   | String | Yes      | ID of the session                   |
+  | secretCode  | String | Yes      | The 6-digit code received via SMS   |
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "sessionId": "session-uuid",
+    "secretCode": "654321"
+  }
+  ```
+  
+  **Success Response**  
+  Returns the updated session with `sessionNeedsMobile2FA: false`.
+  
+  ```json
+  {
+    "sessionId": "session-uuid",
+    "userId": "user-uuid",
+    "sessionNeedsMobile2FA": false,
+    "accessToken": "jwt-token",
+    "expiresIn": 86400
+  }
+  ```
+  
+  **Error Responses**
+  
+  - 403 Forbidden: Code mismatch or expired.
+  - 403 Forbidden: No ongoing verification found.
+  - 401 Unauthorized: Session does not exist or is invalid.
+  
+  ---
+  
+  ### Behavioral Notes
+  
+  - **Rate Limiting**: A user can only request a new mobile 2FA code after the cooldown period (`resendTimeWindow`, e.g., 60 seconds).
+  - **Expiration**: Mobile 2FA codes expire after the configured time (`expireTimeWindow`, e.g., 5 minutes).
+  - **Session Integrity**: Verification status is tied to the session; incorrect sessionId will invalidate the attempt.
+  
+  💡 Mindbricks handles session integrity, rate limiting, and secure code delivery to ensure a robust mobile 2FA process.
+  
+  ## Verification Services — Password Reset by Email
+  
+  Password Reset by Email enables a user to securely reset their password using a secret code sent to their registered email address.
+  
+  All verification services, including password reset by email, are located under the `/verification-services` base path.
+  
+  ### When is Password Reset by Email Triggered?
+  
+  - When a user requests to reset their password by providing their email address.
+  - This service is typically exposed on a “Forgot Password?” flow in the frontend.
+  
+  ### Password Reset Flow
+  
+  1. **Frontend calls `/verification-services/password-reset-by-email/start`** with the user's email.
+     - Mindbricks checks if the user exists and if the email is registered.
+     - A secret code is generated and stored in the cache linked to the user.
+     - The code is sent to the user's email, or returned in the response (in development environments only for testing).
+  2. **User receives the code and enters it into the frontend along with the new password.**
+  3. **Frontend calls `/verification-services/password-reset-by-email/complete`** with the `email`, the `secretCode`, and the new `password`.
+     - Mindbricks checks that the code is valid, not expired, and matches.
+     - If valid, the user’s password is reset, their `emailVerified` flag is set to `true`, and a success response is returned.
+  
+  ---
+  
+  ## API Endpoints
+  
+  ### POST `/verification-services/password-reset-by-email/start`
+  
+  **Purpose**:  
+  Starts the password reset process by generating and sending a secret verification code.
+  
+  #### Request Body
+  
+  | Parameter | Type   | Required | Description                         |
+  |-----------|--------|----------|-------------------------------------|
+  | email     | String | Yes      | The email address of the user       |
+  
+  ```json
+  {
+    "email": "user@example.com"
+  }
+  ```
+  
+  **Success Response**
+  
+  Returns secret code details (only in development environment) and confirmation that the verification step has been started.
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "email": "user@example.com",
+    "secretCode": "123456", 
+    "expireTime": 86400,
+    "date": "2024-04-29T10:00:00.000Z"
+  }
+  ```
+  
+  ⚠️ In production, the secret code is only sent via email and not exposed in the API response.
+  
+  **Error Responses**
+  
+  - `401 NotAuthenticated`: Email address not found or not associated with a user.
+  - `403 Forbidden`: Sending a code too frequently (spam prevention).
+  
+  ---
+  
+  ### POST `/verification-services/password-reset-by-email/complete`
+  
+  **Purpose**:  
+  Completes the password reset process by validating the secret code and updating the user's password.
+  
+  #### Request Body
+  
+  | Parameter   | Type   | Required | Description                                  |
+  |-------------|--------|----------|----------------------------------------------|
+  | email       | String | Yes      | The email address of the user                |
+  | secretCode  | String | Yes      | The code received via email                  |
+  | password    | String | Yes      | The new password the user wants to set       |
+  
+  ```json
+  {
+    "email": "user@example.com",
+    "secretCode": "123456",
+    "password": "newSecurePassword123"
+  }
+  ```
+  
+  **Success Response**
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "email": "user@example.com",
+    "isVerified": true
+  }
+  ```
+  
+  **Error Responses**
+  
+  - `403 Forbidden`:  
+    - Secret code mismatch  
+    - Secret code expired  
+    - No ongoing verification found  
+  
+  ---
+  
+  ## Important Behavioral Notes
+  
+  ### Resend Throttling:
+  A new verification code can only be requested after a cooldown period (configured via `resendTimeWindow`, e.g., 60 seconds).
+  
+  ### Expiration Handling:
+  Verification codes automatically expire after a predefined period (`expireTimeWindow`, e.g., 1 day).
+  
+  ### Session & Event Handling:
+  Mindbricks manages:
+  - Spam prevention
+  - Code caching per user
+  - Expiration logic
+  - Verification start/complete events
+  
+  ## Verification Services — Password Reset by Mobile
+  
+  Password reset by mobile provides users with a secure mechanism to reset their password using a verification code sent via SMS to their registered mobile number.
+  
+  All verification services, including password reset by mobile, are located under the `/verification-services` base path.
+  
+  ### When is Password Reset by Mobile Triggered?
+  
+  - When a user forgets their password and selects the mobile reset option.
+  - When a user explicitly initiates password recovery via mobile on the login or help screen.
+  
+  ### Password Reset by Mobile Flow
+  
+  1. **Frontend calls `/verification-services/password-reset-by-mobile/start`** with the user's mobile number or associated identifier.
+     - Mindbricks checks if a user with the given mobile exists.
+     - A secret code is generated and stored in the cache for that user.
+     - The code is sent to the user's mobile (or returned in development environments for testing).
+  2. **User receives the code via SMS and enters it into the frontend app.**
+  3. **Frontend calls `/verification-services/password-reset-by-mobile/complete`** with the user's `mobile`, the `secretCode`, and the new `password`.
+     - Mindbricks validates the secret code and its expiration.
+     - If valid, it updates the user's password and returns a success response.
+  
+  ---
+  
+  ## API Endpoints
+  
+  ### POST `/verification-services/password-reset-by-mobile/start`
+  
+  **Purpose**:  
+  Initiates the mobile-based password reset by sending a verification code to the user's mobile.
+  
+  #### Request Body
+  
+  | Parameter | Type   | Required | Description                  |
+  |-----------|--------|----------|------------------------------|
+  | mobile    | String | Yes      | The mobile number to verify  |
+  
+  ```json
+  {
+    "mobile": "+905551234567"
+  }
+  ```
+  
+  ### Success Response
+  
+  Returns the verification context (code returned only in development):
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "mobile": "+905551234567",
+    "secretCode": "123456", 
+    "expireTime": 86400,
+    "date": "2024-04-29T10:00:00.000Z"
+  }
+  ```
+  
+  ⚠️ In production, the `secretCode` is not included in the response and is only sent via SMS.
+  
+  ### Error Responses
+  
+  - **400 Bad Request**: Mobile already verified
+  - **403 Forbidden**: Rate-limited (code already sent recently)
+  - **404 Not Found**: User with provided mobile not found
+  
+  ---
+  
+  ### POST `/verification-services/password-reset-by-mobile/complete`
+  
+  **Purpose**:  
+  Finalizes the password reset process by validating the received verification code and updating the user’s password.
+  
+  #### Request Body
+  
+  | Parameter   | Type   | Required | Description                                     |
+  |-------------|--------|----------|-------------------------------------------------|
+  | mobile      | String | Yes      | The mobile number of the user                   |
+  | secretCode  | String | Yes      | The code received via SMS                       |
+  | password    | String | Yes      | The new password to assign                      |
+  
+  ```json
+  {
+    "mobile": "+905551234567",
+    "secretCode": "123456",
+    "password": "NewSecurePassword123!"
+  }
+  ```
+  
+  ### Success Response
+  
+  ```json
+  {
+    "userId": "user-uuid",
+    "mobile": "+905551234567",
+    "isVerified": true
+  }
+  ```
+  
+  ---
+  
+  ### Important Behavioral Notes
+  
+  - **Throttling**: Codes can only be resent after a delay defined by `resendTimeWindow` (e.g., 60 seconds).
+  - **Expiration**: Codes expire after the `expireTimeWindow` (e.g., 1 day).
+  - **One Active Session**: Only one active password reset session is allowed per user at a time.
+  - **Session-less**: This flow does not require an active session — it works for unauthenticated users.
+  
+  💡 Mindbricks handles spam protection, session caching, and event-based logging (for both start and complete operations) as part of the verification service base class.
+  
+  
+  ## Verification Method Types
+  
+  ### 🧾 For byCode Verifications
+  
+  This verification type requires the user to manually enter a 6-digit code.
+  
+  **Frontend Action**:  
+  Display a secure input page where the user can enter the code they received via email or SMS. After collecting the code and any required metadata (such as `userId` or `sessionId`), make a `POST` request to the corresponding `/complete` endpoint.
+  
+  ---
+  
+  ### 🔗 For byLink Verifications
+  
+  This verification type uses a clickable link embedded in an email (or SMS message).
+  
+  **Frontend Action**:  
+  The link points to a `GET` page in your frontend that parses `userId` and `code` from the query string and sends them to the backend via a `POST` request to the corresponding `/complete` endpoint. This enables one-click verification without requiring the user to type in a code.
+  
 
----
-
-## Important Behavioral Notes
-
-### Resend Throttling
-
-You can only request a new verification code after a cooldown period (`resendTimeWindow`, e.g., 60 seconds).
-
-### Expiration Handling
-
-Verification codes expire after a configured period (`expireTimeWindow`, e.g., 1 day).
-
-### One Code Per Session
-
-Only one active verification session per user is allowed at a time.
-
-> 💡 Mindbricks automatically manages spam prevention, session caching, expiration, and event broadcasting (start/complete events) for all verification steps.
-
-## Verification Services — Mobile Verification
-
-Mobile verification is a two-step flow that ensures a user's mobile number is verified and trusted by the system.
-
-All verification services, including mobile verification, are located under the `/verification-services` base path.
-
-### When is Mobile Verification Triggered?
-
-- After user registration, if `mobileVerificationRequiredForLogin` is active.
-- During a separate user action to verify or update mobile numbers.
-- When login fails with `MobileVerificationNeeded` and frontend initiates verification.
-
-### Mobile Verification Flow
-
-1. **Frontend calls `/verification-services/mobile-verification/start`** with the user's email address (used to locate the user).
-   - Mindbricks checks if the mobile number is already verified.
-   - A secret code is generated and stored in the cache linked to the user.
-   - The code is sent to the user's mobile via SMS or returned in the response (only in development environments for easier testing).
-2. **User receives the code and enters it into the frontend application.**
-3. **Frontend calls `/verification-services/mobile-verification/complete`** with the `userId` and the received `secretCode`.
-   - Mindbricks checks that the code is valid, not expired, and matches.
-   - If valid, the user’s `mobileVerified` flag is set to `true`, and a success response is returned.
-
----
-
-## API Endpoints
-
-### POST `/verification-services/mobile-verification/start`
-
-**Purpose**:  
- Starts the mobile verification process by generating and sending a secret verification code.
-
-#### Request Body
-
-| Parameter | Type   | Required | Description                                                   |
-| --------- | ------ | -------- | ------------------------------------------------------------- |
-| email     | String | Yes      | The email address associated with the mobile number to verify |
-
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-**Success Response**  
- Secret code details (in development environment). Confirms that the verification step has been started.
-
-```json
-{
-  "userId": "user-uuid",
-  "mobile": "+15551234567",
-  "secretCode": "123456",
-  "expireTime": 86400,
-  "date": "2024-04-29T10:00:00.000Z"
-}
-```
-
-⚠️ In production, the secret code is only sent via SMS, not exposed in the API response.
-
-**Error Responses**
-
-- 400 Bad Request: Mobile already verified.
-- 403 Forbidden: Sending a code too frequently (anti-spam).
-
----
-
-### POST `/verification-services/mobile-verification/complete`
-
-**Purpose**:  
- Completes the mobile verification by validating the secret code.
-
-#### Request Body
-
-| Parameter  | Type   | Required | Description                                  |
-| ---------- | ------ | -------- | -------------------------------------------- |
-| userId     | String | Yes      | The user's ID whose mobile is being verified |
-| secretCode | String | Yes      | The secret code received via SMS             |
-
-```json
-{
-  "userId": "user-uuid",
-  "secretCode": "123456"
-}
-```
-
-**Success Response**  
- Returns confirmation that the mobile number has been verified.
-
-```json
-{
-  "userId": "user-uuid",
-  "mobile": "+15551234567",
-  "isVerified": true
-}
-```
-
-**Error Responses**  
- 403 Forbidden:
-
-- Secret code mismatch
-- Secret code expired
-- No ongoing verification found
-
----
-
-## Important Behavioral Notes
-
-**Resend Throttling**:  
- You can only request a new verification code after a cooldown period (`resendTimeWindow`, e.g., 60 seconds).
-
-**Expiration Handling**:  
- Verification codes expire after a configured period (`expireTimeWindow`, e.g., 1 day).
-
-**One Code Per Session**:  
- Only one active verification session per user is allowed at a time.
-
-💡 Mindbricks automatically manages spam prevention, session caching, expiration, and event broadcasting (start/complete events) for all verification steps.
-
-## Verification Services — Email 2FA Verification
-
-Email 2FA (Two-Factor Authentication) provides an additional layer of security by requiring users to confirm their identity using a secret code sent to their email address. This process is used in login flows or sensitive actions that need extra verification.
-
-All verification services, including 2FA, are located under the `/verification-services` base path.
-
-### When is Email 2FA Triggered?
-
-- During login flows where `sessionNeedsEmail2FA` is `true`
-- When the backend enforces two-factor authentication for a sensitive operation
-
-### Email 2FA Flow
-
-1. **Frontend calls `/verification-services/email-2factor-verification/start`** with the user’s email address.
-   - Mindbricks identifies the user and checks if a cooldown period applies.
-   - A new secret code is generated and stored, linked to the current session ID.
-   - The code is sent via email or returned in development environments.
-2. **User receives the code and enters it into the frontend application.**
-3. **Frontend calls `/verification-services/email-2factor-verification/complete`** with the `userId`, `sessionId`, and the `secretCode`.
-   - Mindbricks verifies the code, validates the session, and updates the session to remove the 2FA requirement.
-
----
-
-## API Endpoints
-
-### POST `/verification-services/email-2factor-verification/start`
-
-**Purpose**:  
- Starts the email-based 2FA process by generating and sending a verification code.
-
-#### Request Body
-
-| Parameter | Type   | Required | Description           |
-| --------- | ------ | -------- | --------------------- |
-| email     | String | Yes      | The email of the user |
-
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-#### Success Response
-
-```json
-{
-  "sessionId": "session-uuid",
-  "userId": "user-uuid",
-  "email": "user@example.com",
-  "secretCode": "123456",
-  "expireTime": 300,
-  "date": "2024-04-29T10:00:00.000Z"
-}
-```
-
-⚠️ In production, the `secretCode` is only sent via email, not exposed in the API response.
-
-#### Error Responses
-
-- **403 Forbidden**: Sending a code too frequently (anti-spam)
-- **401 Unauthorized**: User session not found
-
----
-
-### POST `/verification-services/email-2factor-verification/complete`
-
-**Purpose**:  
- Completes the email 2FA process by validating the secret code and session.
-
-#### Request Body
-
-| Parameter  | Type   | Required | Description                        |
-| ---------- | ------ | -------- | ---------------------------------- |
-| userId     | String | Yes      | The user’s ID                      |
-| sessionId  | String | Yes      | The session ID the code is tied to |
-| secretCode | String | Yes      | The secret code received via email |
-
-```json
-{
-  "userId": "user-uuid",
-  "sessionId": "session-uuid",
-  "secretCode": "123456"
-}
-```
-
-#### Success Response
-
-Returns an updated session with 2FA disabled:
-
-```json
-{
-  "sessionId": "session-uuid",
-  "userId": "user-uuid",
-  "sessionNeedsEmail2FA": false,
-  ...
-}
-```
-
-#### Error Responses
-
-- **403 Forbidden**:
-  - Secret code mismatch
-  - Secret code expired
-  - Verification step not found
-
----
-
-### Important Behavioral Notes
-
-- **One Code Per Session**: Only one active code can be issued per session.
-- **Resend Throttling**: Code requests are throttled based on `resendTimeWindow` (e.g., 60 seconds).
-- **Expiration**: Codes expire after `expireTimeWindow` (e.g., 5 minutes).
-- 💡 Mindbricks manages session cache, spam control, expiration tracking, and event notifications for all 2FA steps.
-
-## Verification Services — Mobile 2FA Verification
-
-Mobile 2FA (Two-Factor Authentication) is a security mechanism that adds an extra layer of authentication using a user's verified mobile number.
-
-All verification services, including mobile 2FA, are accessible under the `/verification-services` base path.
-
-### When is Mobile 2FA Triggered?
-
-- During login or critical actions requiring step-up authentication.
-- When the session has a flag `sessionNeedsMobile2FA = true`.
-- When login or session verification fails with `MobileVerificationNeeded`, indicating 2FA is required.
-
-### Mobile 2FA Verification Flow
-
-1. **Frontend calls `/verification-services/mobile-2factor-verification/start`** with the user's email address, client info, and reason.
-   - Mindbricks finds the user by email.
-   - Verifies that the user has a verified mobile number.
-   - A secret code is generated and cached against the session.
-   - The code is sent to the user's verified mobile number or returned in the response (only in development environments).
-2. **User receives the code and enters it in the frontend app.**
-3. **Frontend calls `/verification-services/mobile-2factor-verification/complete`** with the `userId`, `sessionId`, and `secretCode`.
-   - Mindbricks validates the code for expiration and correctness.
-   - If valid, the session flag `sessionNeedsMobile2FA` is cleared.
-   - A refreshed session object is returned.
-
----
-
-## API Endpoints
-
-### POST `/verification-services/mobile-2factor-verification/start`
-
-**Purpose**:  
- Initiates mobile-based 2FA by generating and sending a secret code.
-
-#### Request Body
-
-| Parameter | Type   | Required | Description                        |
-| --------- | ------ | -------- | ---------------------------------- |
-| email     | String | Yes      | The user's email address           |
-| client    | String | No       | Optional client tag or context     |
-| reason    | String | No       | Optional reason for triggering 2FA |
-
-```json
-{
-  "email": "user@example.com",
-  "client": "login-page",
-  "reason": "Login requires mobile 2FA"
-}
-```
-
-**Success Response**  
- Returns the generated code (only in development), expiration info, and metadata.
-
-```json
-{
-  "userId": "user-uuid",
-  "sessionId": "session-uuid",
-  "mobile": "+15551234567",
-  "secretCode": "654321",
-  "expireTime": 300,
-  "date": "2024-04-29T11:00:00.000Z"
-}
-```
-
-⚠️ In production environments, the secret code is not included in the response and is instead delivered via SMS.
-
-**Error Responses**
-
-- 403 Forbidden: Mobile number not verified.
-- 403 Forbidden: Code resend attempted before cooldown period (`resendTimeWindow`).
-- 401 Unauthorized: Email not recognized or session invalid.
-
----
-
-### POST `/verification-services/mobile-2factor-verification/complete`
-
-**Purpose**:  
- Completes mobile 2FA verification by validating the secret code and updating the session.
-
-#### Request Body
-
-| Parameter  | Type   | Required | Description                       |
-| ---------- | ------ | -------- | --------------------------------- |
-| userId     | String | Yes      | ID of the user                    |
-| sessionId  | String | Yes      | ID of the session                 |
-| secretCode | String | Yes      | The 6-digit code received via SMS |
-
-```json
-{
-  "userId": "user-uuid",
-  "sessionId": "session-uuid",
-  "secretCode": "654321"
-}
-```
-
-**Success Response**  
- Returns the updated session with `sessionNeedsMobile2FA: false`.
-
-```json
-{
-  "sessionId": "session-uuid",
-  "userId": "user-uuid",
-  "sessionNeedsMobile2FA": false,
-  "accessToken": "jwt-token",
-  "expiresIn": 86400
-}
-```
-
-**Error Responses**
-
-- 403 Forbidden: Code mismatch or expired.
-- 403 Forbidden: No ongoing verification found.
-- 401 Unauthorized: Session does not exist or is invalid.
-
----
-
-### Behavioral Notes
-
-- **Rate Limiting**: A user can only request a new mobile 2FA code after the cooldown period (`resendTimeWindow`, e.g., 60 seconds).
-- **Expiration**: Mobile 2FA codes expire after the configured time (`expireTimeWindow`, e.g., 5 minutes).
-- **Session Integrity**: Verification status is tied to the session; incorrect sessionId will invalidate the attempt.
-
-💡 Mindbricks handles session integrity, rate limiting, and secure code delivery to ensure a robust mobile 2FA process.
-
-## Verification Services — Password Reset by Email
-
-Password Reset by Email enables a user to securely reset their password using a secret code sent to their registered email address.
-
-All verification services, including password reset by email, are located under the `/verification-services` base path.
-
-### When is Password Reset by Email Triggered?
-
-- When a user requests to reset their password by providing their email address.
-- This service is typically exposed on a “Forgot Password?” flow in the frontend.
-
-### Password Reset Flow
-
-1. **Frontend calls `/verification-services/password-reset-by-email/start`** with the user's email.
-   - Mindbricks checks if the user exists and if the email is registered.
-   - A secret code is generated and stored in the cache linked to the user.
-   - The code is sent to the user's email, or returned in the response (in development environments only for testing).
-2. **User receives the code and enters it into the frontend along with the new password.**
-3. **Frontend calls `/verification-services/password-reset-by-email/complete`** with the `email`, the `secretCode`, and the new `password`.
-   - Mindbricks checks that the code is valid, not expired, and matches.
-   - If valid, the user’s password is reset, their `emailVerified` flag is set to `true`, and a success response is returned.
-
----
-
-## API Endpoints
-
-### POST `/verification-services/password-reset-by-email/start`
-
-**Purpose**:  
- Starts the password reset process by generating and sending a secret verification code.
-
-#### Request Body
-
-| Parameter | Type   | Required | Description                   |
-| --------- | ------ | -------- | ----------------------------- |
-| email     | String | Yes      | The email address of the user |
-
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-**Success Response**
-
-Returns secret code details (only in development environment) and confirmation that the verification step has been started.
-
-```json
-{
-  "userId": "user-uuid",
-  "email": "user@example.com",
-  "secretCode": "123456",
-  "expireTime": 86400,
-  "date": "2024-04-29T10:00:00.000Z"
-}
-```
-
-⚠️ In production, the secret code is only sent via email and not exposed in the API response.
-
-**Error Responses**
-
-- `401 NotAuthenticated`: Email address not found or not associated with a user.
-- `403 Forbidden`: Sending a code too frequently (spam prevention).
-
----
-
-### POST `/verification-services/password-reset-by-email/complete`
-
-**Purpose**:  
- Completes the password reset process by validating the secret code and updating the user's password.
-
-#### Request Body
-
-| Parameter  | Type   | Required | Description                            |
-| ---------- | ------ | -------- | -------------------------------------- |
-| email      | String | Yes      | The email address of the user          |
-| secretCode | String | Yes      | The code received via email            |
-| password   | String | Yes      | The new password the user wants to set |
-
-```json
-{
-  "email": "user@example.com",
-  "secretCode": "123456",
-  "password": "newSecurePassword123"
-}
-```
-
-**Success Response**
-
-```json
-{
-  "userId": "user-uuid",
-  "email": "user@example.com",
-  "isVerified": true
-}
-```
-
-**Error Responses**
-
-- `403 Forbidden`:
-  - Secret code mismatch
-  - Secret code expired
-  - No ongoing verification found
-
----
-
-## Important Behavioral Notes
-
-### Resend Throttling:
-
-A new verification code can only be requested after a cooldown period (configured via `resendTimeWindow`, e.g., 60 seconds).
-
-### Expiration Handling:
-
-Verification codes automatically expire after a predefined period (`expireTimeWindow`, e.g., 1 day).
-
-### Session & Event Handling:
-
-Mindbricks manages:
-
-- Spam prevention
-- Code caching per user
-- Expiration logic
-- Verification start/complete events
-
-## Verification Services — Password Reset by Mobile
-
-Password reset by mobile provides users with a secure mechanism to reset their password using a verification code sent via SMS to their registered mobile number.
-
-All verification services, including password reset by mobile, are located under the `/verification-services` base path.
-
-### When is Password Reset by Mobile Triggered?
-
-- When a user forgets their password and selects the mobile reset option.
-- When a user explicitly initiates password recovery via mobile on the login or help screen.
-
-### Password Reset by Mobile Flow
-
-1. **Frontend calls `/verification-services/password-reset-by-mobile/start`** with the user's mobile number or associated identifier.
-   - Mindbricks checks if a user with the given mobile exists.
-   - A secret code is generated and stored in the cache for that user.
-   - The code is sent to the user's mobile (or returned in development environments for testing).
-2. **User receives the code via SMS and enters it into the frontend app.**
-3. **Frontend calls `/verification-services/password-reset-by-mobile/complete`** with the user's `mobile`, the `secretCode`, and the new `password`.
-   - Mindbricks validates the secret code and its expiration.
-   - If valid, it updates the user's password and returns a success response.
-
----
-
-## API Endpoints
-
-### POST `/verification-services/password-reset-by-mobile/start`
-
-**Purpose**:  
- Initiates the mobile-based password reset by sending a verification code to the user's mobile.
-
-#### Request Body
-
-| Parameter | Type   | Required | Description                 |
-| --------- | ------ | -------- | --------------------------- |
-| mobile    | String | Yes      | The mobile number to verify |
-
-```json
-{
-  "mobile": "+905551234567"
-}
-```
-
-### Success Response
-
-Returns the verification context (code returned only in development):
-
-```json
-{
-  "userId": "user-uuid",
-  "mobile": "+905551234567",
-  "secretCode": "123456",
-  "expireTime": 86400,
-  "date": "2024-04-29T10:00:00.000Z"
-}
-```
-
-⚠️ In production, the `secretCode` is not included in the response and is only sent via SMS.
-
-### Error Responses
-
-- **400 Bad Request**: Mobile already verified
-- **403 Forbidden**: Rate-limited (code already sent recently)
-- **404 Not Found**: User with provided mobile not found
-
----
-
-### POST `/verification-services/password-reset-by-mobile/complete`
-
-**Purpose**:  
- Finalizes the password reset process by validating the received verification code and updating the user’s password.
-
-#### Request Body
-
-| Parameter  | Type   | Required | Description                   |
-| ---------- | ------ | -------- | ----------------------------- |
-| mobile     | String | Yes      | The mobile number of the user |
-| secretCode | String | Yes      | The code received via SMS     |
-| password   | String | Yes      | The new password to assign    |
-
-```json
-{
-  "mobile": "+905551234567",
-  "secretCode": "123456",
-  "password": "NewSecurePassword123!"
-}
-```
-
-### Success Response
-
-```json
-{
-  "userId": "user-uuid",
-  "mobile": "+905551234567",
-  "isVerified": true
-}
-```
-
----
-
-### Important Behavioral Notes
-
-- **Throttling**: Codes can only be resent after a delay defined by `resendTimeWindow` (e.g., 60 seconds).
-- **Expiration**: Codes expire after the `expireTimeWindow` (e.g., 1 day).
-- **One Active Session**: Only one active password reset session is allowed per user at a time.
-- **Session-less**: This flow does not require an active session — it works for unauthenticated users.
-
-💡 Mindbricks handles spam protection, session caching, and event-based logging (for both start and complete operations) as part of the verification service base class.
-
-## Verification Method Types
-
-### 🧾 For byCode Verifications
-
-This verification type requires the user to manually enter a 6-digit code.
-
-**Frontend Action**:  
- Display a secure input page where the user can enter the code they received via email or SMS. After collecting the code and any required metadata (such as `userId` or `sessionId`), make a `POST` request to the corresponding `/complete` endpoint.
-
----
-
-### 🔗 For byLink Verifications
-
-This verification type uses a clickable link embedded in an email (or SMS message).
-
-**Frontend Action**:  
- The link points to a `GET` page in your frontend that parses `userId` and `code` from the query string and sends them to the backend via a `POST` request to the corresponding `/complete` endpoint. This enables one-click verification without requiring the user to type in a code.
 
 ### Common Routes
 
 ### Route: currentuser
 
-_Route Definition_: Retrieves the currently authenticated user's session information.
+*Route Definition*: Retrieves the currently authenticated user's session information.
 
-_Route Type_: sessionInfo
+*Route Type*: sessionInfo
 
-_Access Route_: `GET /currentuser`
+*Access Route*: `GET /currentuser`
 
 #### Parameters
 
@@ -2508,14 +2352,12 @@ This route does **not** require any request parameters.
 // Sample GET /currentuser call
 axios.get("/currentuser", {
   headers: {
-    Authorization: "Bearer your-jwt-token",
-  },
+    "Authorization": "Bearer your-jwt-token"
+  }
 });
 ```
-
 **Success Response**
 Returns the session object, including user-related data and token information.
-
 ```
 {
   "sessionId": "9cf23fa8-07d4-4e7c-80a6-ec6d6ac96bb9",
@@ -2528,10 +2370,8 @@ Returns the session object, including user-related data and token information.
   ...
 }
 ```
-
 **Error Response**
 **401 Unauthorized:** No active session found.
-
 ```
 {
   "status": "ERR",
@@ -2540,10 +2380,9 @@ Returns the session object, including user-related data and token information.
 ```
 
 **Notes**
-
-- This route is typically used by frontend or mobile applications to fetch the current session state after login.
-- The returned session includes key user identity fields, tenant information (if applicable), and the access token for further authenticated requests.
-- Always ensure a valid access token is provided in the request to retrieve the session.
+* This route is typically used by frontend or mobile applications to fetch the current session state after login.
+* The returned session includes key user identity fields, tenant information (if applicable), and the access token for further authenticated requests.
+* Always ensure a valid access token is provided in the request to retrieve the session.
 
 ### Route: permissions
 
@@ -2551,7 +2390,7 @@ Returns the session object, including user-related data and token information.
 
 `*Route Type*`: permissionFetch
 
-_Access Route_: `GET /permissions`
+*Access Route*: `GET /permissions`
 
 #### Parameters
 
@@ -2567,15 +2406,13 @@ This route does **not** require any request parameters.
 // Sample GET /permissions call
 axios.get("/permissions", {
   headers: {
-    Authorization: "Bearer your-jwt-token",
-  },
+    "Authorization": "Bearer your-jwt-token"
+  }
 });
 ```
-
 **Success Response**
 
 Returns an array of permission objects.
-
 ```json
 [
   {
@@ -2600,50 +2437,46 @@ Returns an array of permission objects.
   }
 ]
 ```
-
 Each object reflects a single permission grant, aligned with the givenPermissions model:
 
 - `**permissionName**`: The permission the user has.
-- `**roleId**`: If the permission was granted through a role. -` **subjectUserId**`: If directly granted to the user.
+- `**roleId**`: If the permission was granted through a role.
+-` **subjectUserId**`: If directly granted to the user.
 - `**subjectUserGroupId**`: If granted through a group.
 - `**objectId**`: If tied to a specific object (OBAC).
 - `**canDo**`: True or false flag to represent if permission is active or restricted.
 
 **Error Responses**
-
-- **401 Unauthorized**: No active session found.
-
+* **401 Unauthorized**: No active session found.
 ```json
 {
   "status": "ERR",
   "message": "No login found"
 }
 ```
-
-- **500 Internal Server Error**: Unexpected error fetching permissions.
+* **500 Internal Server Error**: Unexpected error fetching permissions.
 
 **Notes**
-
-- The /permissions route is available across all backend services generated by Mindbricks, not just the auth service.
-- Auth service: Fetches permissions freshly from the live database (givenPermissions table).
-- Other services: Typically use a cached or projected view of permissions stored in a common ElasticSearch store, optimized for faster authorization checks.
+* The /permissions route is available across all backend services generated by Mindbricks, not just the auth service.
+* Auth service: Fetches permissions freshly from the live database (givenPermissions table).
+* Other services: Typically use a cached or projected view of permissions stored in a common ElasticSearch store, optimized for faster authorization checks.
 
 > **Tip**:
 > Applications can cache permission results client-side or server-side, but should occasionally refresh by calling this endpoint, especially after login or permission-changing operations.
 
 ### Route: permissions/:permissionName
 
-_Route Definition_: Checks whether the current user has access to a specific permission, and provides a list of scoped object exceptions or inclusions.
+*Route Definition*: Checks whether the current user has access to a specific permission, and provides a list of scoped object exceptions or inclusions.
 
-_Route Type_: permissionScopeCheck
+*Route Type*: permissionScopeCheck
 
-_Access Route_: `GET /permissions/:permissionName`
+*Access Route*: `GET /permissions/:permissionName`
 
 #### Parameters
 
-| Parameter      | Type   | Required | Population                      |
-| -------------- | ------ | -------- | ------------------------------- |
-| permissionName | String | Yes      | `request.params.permissionName` |
+| Parameter         | Type   | Required | Population             |
+|------------------|--------|----------|------------------------|
+| permissionName   | String | Yes      | `request.params.permissionName` |
 
 #### Behavior
 
@@ -2657,8 +2490,8 @@ _Access Route_: `GET /permissions/:permissionName`
 // Sample GET /permissions/orders.manage
 axios.get("/permissions/orders.manage", {
   headers: {
-    Authorization: "Bearer your-jwt-token",
-  },
+    "Authorization": "Bearer your-jwt-token"
+  }
 });
 ```
 
@@ -2674,16 +2507,14 @@ axios.get("/permissions/orders.manage", {
 }
 ```
 
-- If `canDo` is `true`, the user generally has the permission, but not for the objects listed in `exceptions` (i.e., restrictions).
-- If `canDo` is `false`, the user does not have the permission by default — but only for the objects in `exceptions`, they do have permission (i.e., selective overrides).
-- The exceptions array contains valid **UUID strings**, each corresponding to an object ID (typically from the data model targeted by the permission).
+* If `canDo` is `true`, the user generally has the permission, but not for the objects listed in `exceptions` (i.e., restrictions).
+* If `canDo` is `false`, the user does not have the permission by default — but only for the objects in `exceptions`, they do have permission (i.e., selective overrides).
+* The exceptions array contains valid **UUID strings**, each corresponding to an object ID (typically from the data model targeted by the permission).
 
 ## Copyright
-
 All sources, documents and other digital materials are copyright of .
 
 ## About Us
-
 For more information please visit our website: .
 
 .
