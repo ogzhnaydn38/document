@@ -56,11 +56,37 @@ module.exports = {
     },
     {
       "title": "Test1 Service",
-      "items": []
+      "items": [
+        {
+          "title": "_CATEGORY_",
+          "url": "/test1-service/_category_"
+        },
+        {
+          "title": "EVENT GUIDE",
+          "url": "/test1-service/event-guide"
+        },
+        {
+          "title": "REST API GUIDE",
+          "url": "/test1-service/rest-api-guide"
+        }
+      ]
     },
     {
       "title": "Test2 Service",
-      "items": []
+      "items": [
+        {
+          "title": "_CATEGORY_",
+          "url": "/test2-service/_category_"
+        },
+        {
+          "title": "EVENT GUIDE",
+          "url": "/test2-service/event-guide"
+        },
+        {
+          "title": "REST API GUIDE",
+          "url": "/test2-service/rest-api-guide"
+        }
+      ]
     },
     {
       "title": "Auth Service",
